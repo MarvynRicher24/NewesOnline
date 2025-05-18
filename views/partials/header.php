@@ -20,9 +20,16 @@
                     <!-- navigation to the admin panel -->
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                         <a href="index.php?controller=admin&action=index">Admin Panel</a>
-                    <!-- Navigation to the profile panel -->
-                    <?php elseif (isset($_SESSION['role']) && $_SESSION['role'] === 'subscriber'): ?>
-                        <a href="index.php?controller=profile&action=edit">My Profile</a>
+                    <?php endif; ?>
+                        
+                        <!-- Navigation to the profile panel -->
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'subscriber' && !empty($subscriber)): ?>
+                        <li style="display: flex; align-items: center;">
+                            <?php if (!empty($subscriber['avatar'])): ?>
+                                <img src="public/uploads/<?= htmlspecialchars($subscriber['avatar']) ?>" alt="Avatar" class="avatar" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
+                            <?php endif; ?>
+                            <span><?= htmlspecialchars($subscriber['username']) ?></span>
+                        </li>
                     <?php endif; ?>
                 </nav>
                 <div class="auth-link">
