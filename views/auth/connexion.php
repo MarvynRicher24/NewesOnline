@@ -1,8 +1,8 @@
 <?php include __DIR__ . '/../partials/header.php'; ?>
 
 <div>
-    <button onclick="showForm('login')">Connexion</button>
-    <button onclick="showForm('register')">Inscription</button>
+    <button class="button" style="border: none; margin-top: 10px; background: #888; color: #fff; text-decoration:none; padding:8px 18px; border-radius:5px;" onclick="showForm('login')">Connexion</button>
+    <button class="button" style="border: none; margin-top: 10px; background: #888; color: #fff; text-decoration:none; padding:8px 18px; border-radius:5px;" onclick="showForm('register')">Inscription</button>
 </div>
 
 <div id="login-form" style="display:<?= (empty($_GET['action']) || $_GET['action'] === 'connexion') ? 'block' : 'none' ?>">
@@ -21,7 +21,7 @@
         <label>Password:</label><input type="password" name="password" required>
         <label>Avatar:</label><input type="file" name="avatar">
         <label>Description:</label><textarea name="description"></textarea>
-        <button type="submit">S'inscrire</button>
+        <button type="submit">Inscription</button>
         <?php if (!empty($register_error)): ?><p class="error"><?=htmlspecialchars($register_error)?></p><?php endif; ?>
     </form>
 </div>

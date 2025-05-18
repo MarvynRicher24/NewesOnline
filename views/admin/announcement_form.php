@@ -1,8 +1,10 @@
 <?php include __DIR__ . '/../partials/header.php'; ?>
 
+<a href="index.php?controller=admin" class="button" style="margin-top: 10px; background: #888; color: #fff; text-decoration:none; padding:8px 18px; border-radius:5px;">Return</a>
+
 <h2><?= isset($announcement) ? 'Edit' : 'Add' ?> announcement</h2>
 <form action="index.php?controller=admin&action=<?= isset($announcement) ? 'edit&id=' . $announcement['id'] : 'add' ?>" method="post" enctype="multipart/form-data">
-    <label>Title:</label>
+<label>Title:</label>
     <input type="text" name="title" value="<?= htmlspecialchars($announcement['title'] ?? '') ?>" required>
 
     <label>Subtitle:</label>
