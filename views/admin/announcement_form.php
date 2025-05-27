@@ -1,10 +1,15 @@
+<?php
+if (!isset($announcement)) {
+    $announcement = [];
+}
+?>
 <?php include __DIR__ . '/../partials/header.php'; ?>
 
-<a href="index.php?controller=admin" class="button" style="margin-top: 10px; background: #888; color: #fff; text-decoration:none; padding:8px 18px; border-radius:5px;">Return</a>
+<a href="index.php?controller=admin" class="button" style="margin-top:10px; background:#888; color:#fff; text-decoration:none; padding:6px 18px; border-radius:5px; min-width:0; display:inline-block;">Return</a>
 
-<h2><?= isset($announcement) ? 'Edit' : 'Add' ?> announcement</h2>
-<form action="index.php?controller=admin&action=<?= isset($announcement) ? 'edit&id=' . $announcement['id'] : 'add' ?>" method="post" enctype="multipart/form-data">
-<label>Title:</label>
+<h2><?= isset($announcement['id']) ? 'Edit' : 'Add' ?> announcement</h2>
+<form action="index.php?controller=admin&action=<?= isset($announcement['id']) ? 'edit&id=' . $announcement['id'] : 'add' ?>" method="post" enctype="multipart/form-data">
+    <label>Title:</label>
     <input type="text" name="title" value="<?= htmlspecialchars($announcement['title'] ?? '') ?>" required>
 
     <label>Subtitle:</label>
@@ -32,6 +37,6 @@
     <label>Image:</label>
     <input type="file" name="image" accept="image/*">
 
-    <button type="submit"><?= isset($announcement) ? 'Update' : 'Create' ?></button>
+    <button type="submit"><?= isset($announcement['id']) ? 'Update' : 'Create' ?></button>
 </form>
 <?php include __DIR__ . '/../partials/footer.php'; ?>

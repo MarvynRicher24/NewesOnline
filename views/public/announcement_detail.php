@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/../partials/header.php'; ?>
 
-<a href="index.php?controller=public&action=announcements" class="button" style="margin-top: 10px; background: #888; color: #fff; text-decoration:none; padding:8px 18px; border-radius:5px;">Return</a>
+<a href="index.php?controller=public&action=announcements" class="button" style="margin-top:10px; background:#888; color:#fff; text-decoration:none; padding:6px 18px; border-radius:5px; width:auto; min-width:0; display:inline-block;">Return</a>
 
 <div class="detail-container">
     <h2><?= htmlspecialchars($announcement['title']) ?></h2>

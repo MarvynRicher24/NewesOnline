@@ -9,6 +9,20 @@ class SubscriberController
         require_once __DIR__ . '/../models/Subscriber.php';
     }
 
+    // Show profile
+    public function profile()
+    {
+        session_start();
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: index.php?controller=auth&action=connexion');
+            exit;
+        }
+        $subscriberModel = new Subscriber($this->pdo);
+        $subscriber = $subscriberModel->findById($_SESSION['user_id']);
+        require __DIR__ . '/../views/subscriber/profile.php';
+    }
+
+    // Edit profile
     public function edit()
     {
         session_start();
@@ -16,9 +30,9 @@ class SubscriberController
             header('Location: index.php?controller=auth&action=connexion');
             exit;
         }
-        $subscriber = new Subscriber($this->pdo);
-        $user = $subscriber->findById($_SESSION['user_id']);
-    
+        $subscriberModel = new Subscriber($this->pdo);
+        $subscriber = $subscriberModel->findById($_SESSION['user_id']);
+
         // Recover avatar list available
         $avatarDir = __DIR__ . '/../public/uploads/avatar/';
         $avatars = [];

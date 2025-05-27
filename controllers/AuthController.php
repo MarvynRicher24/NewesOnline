@@ -30,7 +30,6 @@ class AuthController
             if ($admin && password_verify($password, $admin['password'])) {
                 $_SESSION['admin'] = true;
                 $_SESSION['user_id'] = $admin['id'];
-                // Define the role
                 $_SESSION['role'] = 'admin';
                 header('Location: index.php?controller=admin&action=index');
                 exit;
@@ -39,12 +38,14 @@ class AuthController
             // if else, verify if it's a subscriber
             $subscriberModel = new Subscriber($this->pdo);
             $user = $subscriberModel->findByUsername($username);
+            if (!$user){
+                $user = $subscriberModel->findByEmail($username);
+            }
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['admin'] = false;
                 $_SESSION['user_id'] = $user['id'];
-                // Define the role
                 $_SESSION['role'] = 'subscriber';
-                header('Location: index.php?controller=profile&action=edit');
+                header('Location: index.php?controller=profile&action=profile');
                 exit;
             }
 
@@ -67,6 +68,7 @@ class AuthController
             }
         }
 
+        $register_error = '';
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             $username = $_POST['username'];
             $email = $_POST['email'];

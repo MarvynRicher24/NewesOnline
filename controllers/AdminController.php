@@ -28,7 +28,7 @@ class AdminController
     public function index()
     {
         $announcements = $this->announcementModel->getAll();
-        require __DIR__ . '/../views/admin/announcements_list.php';
+        require __DIR__ . '/../views/admin/adminPanel.php';
     }
 
     // Show form to add a new announcement or handle form submission

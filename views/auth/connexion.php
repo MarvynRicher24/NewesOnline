@@ -1,8 +1,8 @@
 <?php include __DIR__ . '/../partials/header.php'; ?>
 
 <div>
-    <button class="button" style="border: none; margin-top: 10px; background: #888; color: #fff; text-decoration:none; padding:8px 18px; border-radius:5px;" onclick="showForm('login')">Connexion</button>
-    <button class="button" style="border: none; margin-top: 10px; background: #888; color: #fff; text-decoration:none; padding:8px 18px; border-radius:5px;" onclick="showForm('register')">Inscription</button>
+    <button class="button" onclick="showForm('login')">Connexion</button>
+    <button class="button" onclick="showForm('register')">Inscription</button>
 </div>
 
 <!-- Connexion -->
@@ -16,7 +16,7 @@
         <label>Password:
         <input type="password" name="password" required></label>
 
-        <button type="submit">Connexion</button>
+        <button class="button" name="connexion" type="submit">Connexion</button>
 
         <?php if (!empty($error)): ?><p class="error"><?= htmlspecialchars($error) ?></p><?php endif; ?>
     </form>
@@ -42,8 +42,9 @@
                 <?php foreach ($avatars as $avatar): ?>
                     
                     <label for="display: flex; flex-direction: column; align-items: center;">
-                        <input type="radio" name="avatar" value="<?= htmlspecialchars($avatar) ?>" required></label>
-                        <img src="public/uploads/avatar/<?= htmlspecialchars($avatar) ?>" alt="Avatar" style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ccc;"></label>
+                        <input type="radio" name="avatar" value="<?= htmlspecialchars($avatar) ?>" required>
+                        <img src="public/uploads/avatar/<?= htmlspecialchars($avatar) ?>" alt="Avatar" style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ccc;">
+                    </label>
                     
                 <?php endforeach; ?>
             <?php else: ?>

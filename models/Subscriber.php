@@ -3,6 +3,14 @@ class Subscriber
 {
     private $pdo;
 
+    // FIND BY EMAIL
+    public function findByEmail($email)
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM subscriber WHERE email = :email');
+        $stmt->execute(['email' => $email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     // FIND BY ID
     public function findById($id)
     {

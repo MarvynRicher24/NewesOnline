@@ -1,44 +1,38 @@
-    <?php if (session_status() == PHP_SESSION_NONE) session_start(); ?>
-
-    <!DOCTYPE html>
-    <html>
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>NewesOnline</title>
-        <link rel="stylesheet" href="public/css/style.css">
-    </head>
-
-    <body>
-        <header>
-            <div class="container header-inner">
-                <div class="branding"><a href="index.php"><img src="./public/uploads/mustang-logo.png" class="logo"> <span class="site-title">NewesOnline</span></a></div>
-                <nav class="main-nav">
-                    <a href="index.php">Home</a>
-                    <a href="index.php?controller=about">About</a>
-                    <!-- navigation to the admin panel -->
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                        <a href="index.php?controller=admin&action=index">Admin Panel</a>
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+// $subscriber doit être passé à la vue par le contrôleur si connecté
+?>
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>NewesOnline</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="public/css/style.css">
+<header>
+    <div class="header-inner" style="display: flex; align-items: center; justify-content: space-between;">
+        <nav class="main-nav">
+            <ul style="display: flex; gap: 20px; list-style: none; margin: 0; padding: 0;">
+                <li><a href="index.php">Home</a></li>
+                <li><a href="index.php?controller=about">About</a></li>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                    <li><a href="index.php?controller=admin">Admin Panel</a></li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+        <div class="auth-link" style="display: flex; align-items: center; margin-left: auto;">
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'subscriber' && !empty($subscriber)): ?>
+                <a href="index.php?controller=profile&action=profile" style="display: flex; align-items: center; text-decoration: none; margin-right: 1rem;">
+                    <?php if (!empty($subscriber['avatar'])): ?>
+                        <img src="public/uploads/avatar/<?= htmlspecialchars($subscriber['avatar']) ?>" alt="Avatar" class="avatar" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
                     <?php endif; ?>
-                        
-                        <!-- Navigation to the profile panel -->
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'subscriber' && !empty($subscriber)): ?>
-                        <li style="display: flex; align-items: center;">
-                            <?php if (!empty($subscriber['avatar'])): ?>
-                                <img src="public/uploads/<?= htmlspecialchars($subscriber['avatar']) ?>" alt="Avatar" class="avatar" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
-                            <?php endif; ?>
-                            <span><?= htmlspecialchars($subscriber['username']) ?></span>
-                        </li>
-                    <?php endif; ?>
-                </nav>
-                <div class="auth-link">
-                    <?php if (isset($_SESSION['role'])): ?>
-                        <a href="index.php?controller=auth&action=logout">Déconnexion</a>
-                    <?php else: ?>
-                        <a href="index.php?controller=auth&action=connexion">Connexion</a>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </header>
-        <main class="container">
+                    <span style="color: #2c3e50; font-weight: bold;"><?= htmlspecialchars($subscriber['username']) ?></span>
+                </a>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['role'])): ?>
+                <a href="index.php?controller=auth&action=logout" class="button">Logout</a>
+            <?php else: ?>
+                <a href="index.php?controller=auth&action=connexion" class="button">Login</a>
+            <?php endif; ?>
+        </div>
+    </div>
+</header>
