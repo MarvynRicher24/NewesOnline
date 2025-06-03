@@ -5,15 +5,15 @@ if (!isset($announcement)) {
 ?>
 <?php include __DIR__ . '/../partials/header.php'; ?>
 
-<a href="index.php?controller=admin" class="button" style="margin-top:10px; background:#888; color:#fff; text-decoration:none; padding:6px 18px; border-radius:5px; min-width:0; display:inline-block;">Return</a>
+<a href="index.php?controller=admin" class="buttonReturn">Return</a>
 
 <h2><?= isset($announcement['id']) ? 'Edit' : 'Add' ?> announcement</h2>
 <form action="index.php?controller=admin&action=<?= isset($announcement['id']) ? 'edit&id=' . $announcement['id'] : 'add' ?>" method="post" enctype="multipart/form-data">
     <label>Title:</label>
-    <input type="text" name="title" value="<?= htmlspecialchars($announcement['title'] ?? '') ?>" required>
+    <input type="text" name="title" value="<?= htmlspecialchars($announcement['title'] ?? '') ?>" maxlength="255" required>
 
     <label>Subtitle:</label>
-    <input type="text" name="subtitle" value="<?= htmlspecialchars($announcement['subtitle'] ?? '') ?>">
+    <input type="text" name="subtitle" value="<?= htmlspecialchars($announcement['subtitle'] ?? '') ?>" maxlength="255">
 
     <label>Category:</label>
     <select name="category_id" required>

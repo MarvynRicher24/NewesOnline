@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="public/css/style.css">
 <header>
-    <div class="header-inner" style="display: flex; align-items: center; justify-content: space-between;">
+    <div class="header-inner">
         <nav class="main-nav">
             <ul style="display: flex; gap: 20px; list-style: none; margin: 0; padding: 0;">
                 <li><a href="index.php">Home</a></li>
@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
             </ul>
         </nav>
         <div class="auth-link" style="display: flex; align-items: center; margin-left: auto;">
-            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'subscriber' && !empty($subscriber)): ?>
+            <?php if (isset($_SESSION['role'], $subscriber) && $_SESSION['role'] === 'subscriber'): ?>
                 <a href="index.php?controller=profile&action=profile" style="display: flex; align-items: center; text-decoration: none; margin-right: 1rem;">
                     <?php if (!empty($subscriber['avatar'])): ?>
                         <img src="public/uploads/avatar/<?= htmlspecialchars($subscriber['avatar']) ?>" alt="Avatar" class="avatar" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
@@ -36,3 +36,4 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         </div>
     </div>
 </header>
+<main>

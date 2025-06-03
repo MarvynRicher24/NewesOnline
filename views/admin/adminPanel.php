@@ -2,20 +2,7 @@
 
 <!-- CREATED POP-UP -->
 <?php if (isset($_GET['created'])): ?>
-    <div id="popup-created" style="
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: #3498db;
-            color: #fff;
-            padding: 16px 32px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            font-size: 1.1em;
-            z-index: 9999;
-            opacity: 0.95;
-            transition: opacity 0.5s;
-            ">Announcement created successfully!
+    <div id="popup-created">Announcement created successfully!
     </div>
     <script>
         setTimeout(function() {
@@ -30,20 +17,7 @@
 
 <!-- UPDATED POP-UP -->
 <?php if (isset($_GET['updated'])): ?>
-    <div id="popup-success" style="
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: #4BB543;
-            color: #fff;
-            padding: 16px 32px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            font-size: 1.1em;
-            z-index: 9999;
-            opacity: 0.95;
-            transition: opacity 0.5s;
-            ">Announcement updated successfully!
+    <div id="popup-success">Announcement updated successfully!
     </div>
     <script>
         setTimeout(function() {
@@ -58,20 +32,7 @@
 
 <!-- DELETED POP-UP -->
 <?php if (isset($_GET['deleted'])): ?>
-    <div id="popup-deleted" style="
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: #e74c3c;
-            color: #fff;
-            padding: 16px 32px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            font-size: 1.1em;
-            z-index: 9999;
-            opacity: 0.95;
-            transition: opacity 0.5s;
-            ">Announcement deleted!
+    <div id="popup-deleted">Announcement deleted!
     </div>
     <script>
         setTimeout(function() {
@@ -88,13 +49,7 @@
 
 <?php if (!empty($announcements)): ?>
 
-    <div style="
-            background: #f8f9fa;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(52,152,219,0.08);
-            padding: 40px 60px;
-            text-align: center;
-            ">
+    <div class="adminPanel-container">
         <a href="index.php?controller=admin&action=add" style="display:inline-block;">
             <svg width="60" height="60" viewBox="0 0 24 24" fill="none" style="margin-bottom: 18px;">
                 <circle cx="12" cy="12" r="12" fill="#e3eafc" />
@@ -118,12 +73,12 @@
                         <td><?= htmlspecialchars($announcement['category_name'] ?? '') ?></td>
                         <td>
                             <?php if (!empty($announcement['image'])): ?>
-                                <img src="public/uploads/<?= htmlspecialchars($announcement['image']) ?>" width="80">
+                                <img src="public/uploads/<?= htmlspecialchars($announcement['image']) ?>" width="80" alt="Announcement image">
                             <?php endif; ?>
                         </td>
                         <td>
                             <a href="index.php?controller=admin&action=edit&id=<?= $announcement['id'] ?>" class="button">Edit</a>
-                            <a href="index.php?controller=admin&action=delete&id=<?= $announcement['id'] ?>" class="button delete-btn" data-id="<? $announcement['id'] ?>">Delete</a>
+                            <a href="index.php?controller=admin&action=delete&id=<?= $announcement['id'] ?>" class="button delete-btn">Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -132,12 +87,12 @@
     </div>
 
     <!-- Modal de confirmation suppression -->
-    <div id="delete-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:9999; align-items:center; justify-content:center;">
-        <div style="background:#fff; padding:32px 24px; border-radius:10px; box-shadow:0 2px 16px rgba(0,0,0,0.2); min-width:300px; text-align:center;">
+    <div class="deleteModal-container" id="delete-modal">
+        <div class="deleteModal">
             <h3 style="margin-bottom:20px;">Are you sure you want to delete this announcement?</h3>
             <div style="display:flex; gap:16px; justify-content:center;">
-                <button id="confirm-delete" style="background:#e74c3c; color:#fff; border:none; padding:10px 24px; border-radius:5px; cursor:pointer;">Delete</button>
-                <button id="cancel-delete" style="background:#ccc; color:#333; border:none; padding:10px 24px; border-radius:5px; cursor:pointer;">Cancel</button>
+                <button id="confirm-delete">Delete</button>
+                <button id="cancel-delete">Cancel</button>
             </div>
         </div>
     </div>
@@ -159,23 +114,10 @@
         };
     </script>
 
-
 <?php else: ?>
-    <div style="
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 40vh;
-    ">
+    <div class="createAnnouncement-container">
         <!-- CREATE AN ANNOUNCEMENT BUTTON -->
-        <div style="
-            background: #f8f9fa;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(52,152,219,0.08);
-            padding: 40px 60px;
-            text-align: center;
-        ">
+        <div class="buttonCreateAnnouncement">
             <a href="index.php?controller=admin&action=add" style="display:inline-block;">
                 <svg width="60" height="60" viewBox="0 0 24 24" fill="none" style="margin-bottom: 18px;">
                     <circle cx="12" cy="12" r="12" fill="#e3eafc" />

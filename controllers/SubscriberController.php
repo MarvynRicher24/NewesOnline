@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../models/Subscriber.php';
+
 class SubscriberController
 {
     private $pdo;
@@ -6,17 +8,17 @@ class SubscriberController
     public function __construct($pdo)
     {
         $this->pdo = $pdo;
-        require_once __DIR__ . '/../models/Subscriber.php';
     }
 
     // Show profile
     public function profile()
     {
         session_start();
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'subscriber') {
             header('Location: index.php?controller=auth&action=connexion');
             exit;
         }
+
         $subscriberModel = new Subscriber($this->pdo);
         $subscriber = $subscriberModel->findById($_SESSION['user_id']);
         require __DIR__ . '/../views/subscriber/profile.php';
@@ -26,10 +28,11 @@ class SubscriberController
     public function edit()
     {
         session_start();
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'subscriber') {
             header('Location: index.php?controller=auth&action=connexion');
             exit;
         }
+
         $subscriberModel = new Subscriber($this->pdo);
         $subscriber = $subscriberModel->findById($_SESSION['user_id']);
 
@@ -38,8 +41,10 @@ class SubscriberController
         $avatars = [];
         if (is_dir($avatarDir)) {
             foreach (scandir($avatarDir) as $file) {
-                if ($file !== '.' && $file !== '..' && preg_match('/\.(jpg|jpeg|png|gif)$/i', $file)) {
-                    $avatars[] = $file;
+                if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif'])) {
+                    if ($file !== '.' && $file !== '..') {
+                        $avatars[] = $file;
+                    }
                 }
             }
         }
@@ -49,23 +54,45 @@ class SubscriberController
     public function update()
     {
         session_start();
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'subscriber') {
             header('Location: index.php?controller=auth&action=connexion');
             exit;
         }
-        $subscriber = new Subscriber($this->pdo);
-        $user = $subscriber->findById($_SESSION['user_id']);
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $description = $_POST['description'];
-        $passwordHash = null;
-        if (!empty($_POST['password'])) {
-            $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+        $subscriberModel = new Subscriber($this->pdo);
+        $validator = $subscriberModel->findById($_SESSION['user_id']);
+        if (!$validator) {
+            header('Location: index.php?controller=auth&action=connexion');
+            exit;
         }
-        $avatar = $_POST['avatar']; // Choose the file name
-        $subscriber->updateProfile($user['id'], $username, $email, $passwordHash, $avatar, $description);
-        // Correction : rediriger vers la bonne page
-        header('Location: index.php?controller=profile&action=edit');
+
+        $username = trim($_POST['username']);
+        $email = trim($_POST['email']);
+        $description = trim($_POST['description'] ?? '');
+        $avatar = $_POST['avatar'] ?? null;
+        $newPasswordHash = null;
+
+        if (!empty($_POST['password'])) {
+            $newPasswordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        }
+
+        // Minimal validation
+        if (empty($username) || empty($email) || empty($avatar)) {
+            $_SESSION['flash_message'] = "Please fill in all required fields";
+            header('Location: index.php?controller=profile&action=edit');
+            exit;
+        }
+        // Update
+        $subscriberModel->updateProfile(
+            $_SESSION['user_id'],
+            $username,
+            $email,
+            $newPasswordHash,
+            $avatar,
+            $description
+        );
+        $_SESSION['flash_message'] = "Profile updated";
+        header('Location: index.php?controller=profile&action=profile');
         exit;
     }
 }

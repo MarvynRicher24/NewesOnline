@@ -1,4 +1,6 @@
 <?php include __DIR__ . '/../partials/header.php'; ?>
+
+<a href="index.php?controller=subscriber" class="buttonReturn">Return</a>
 <h2>My profil</h2>
 <form action="index.php?controller=profile&action=update" method="post" enctype="multipart/form-data">
 
