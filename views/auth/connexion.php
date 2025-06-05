@@ -1,34 +1,40 @@
-<?php include __DIR__ . '/../partials/header.php'; ?>
+<?php
+$pageTitle = 'Connexion';
+include __DIR__ . '/../partials/header.php';
+?>
 
-<div>
-    <a href="index.php?controller=auth&action=connexion" class="button">Connexion</a>
-    <a href="index.php?controller=auth&action=register" class="button">Register</a>
+<div class="auth-container">
+    <div class="class auth-button">
+        <a href="index.php?controller=auth&action=connexion" class="button <?= (isset($_GET['action']) && $_GET['action'] === 'connexion') || !isset($_GET['action']) ? 'active' : '' ?>">Connexion</a>
+        <a href="index.php?controller=auth&action=register" class="button <?= (isset($_GET['action']) && $_GET['action'] === 'register') ? 'active' : '' ?>">Register</a>
+    </div>
 </div>
 
 <?php if (isset($_GET['action']) && $_GET['action'] === 'register'): ?>
-    <!-- Inscription -->
-    <div id="register-form">
-        <h2 style="margin-top: 10px;">Inscription</h2>
+    <!-- Inscription form -->
+    <div class="form-container">
+        <h2>Inscription</h2>
         <form action="index.php?controller=auth&action=register" method="post" enctype="multipart/form-data">
 
-            <label>Pseudo:
-                <input name="username" required></label>
+            <label>Pseudo :</label>
+            <input name="username" required value="<?= isset($_POST['username']) ? htmlspecialchars($_POST["username"]) : '' ?>">
 
-            <label>Email:
-                <input type="email" name="email" required></label>
 
-            <label>Password:
-                <input type="password" name="password" required></label>
+            <label>Email :</label>
+                <input type="email" name="email" required value="<?= isset($_POST['email']) ? htmlspecialchars($_POST["email"]) : '' ?>">
 
-            <label>Choose your Avatar:
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <label>Password :</label>
+                <input type="password" name="password" required>
+
+            <label>Choose your Avatar :</label>
+                <div class="avatar-selection">
                     <?php if (!empty($avatars)): ?>
-                        <?php foreach ($avatars as $avatar): ?>
+                        <?php foreach ($avatars as $avatarFile): ?>
 
-                            <label for="display: flex; flex-direction: column; align-items: center;">
+                            <label class="avatar-option">
                                 <input type="radio" name="avatar" value="<?= htmlspecialchars($avatar) ?>" required>
                                 <img src="public/uploads/avatar/<?= htmlspecialchars($avatar) ?>" alt="Avatar" style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ccc;">
-                            </label>
+                            
 
                         <?php endforeach; ?>
                     <?php else: ?>

@@ -11,8 +11,9 @@ class Announcement
     // Get the categories
     public function getAll()
     {
-        $sql = "SELECT a.*, c.name AS category_name FROM announcements a
-                LEFT JOIN category c ON a.category_id=c.id
+        $sql = "SELECT a.*, c.name AS category_name 
+                FROM announcements a
+                LEFT JOIN category c ON a.category_id = c.id
                 ORDER BY a.created_at DESC";
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -36,11 +37,11 @@ class Announcement
                 VALUES (:title, :subtitle, :content, :category_id, :image)';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
-            'title' => $title,
-            'subtitle' => $subtitle,
-            'content' => $content,
-            'category_id' => $category_id,
-            'image' => $image
+            'title'         => $title,
+            'subtitle'      => $subtitle,
+            'content'       => $content,
+            'category_id'   => $category_id,
+            'image'         => $image
         ]);
     }
 
@@ -52,23 +53,23 @@ class Announcement
                     SET title = :title, subtitle = :subtitle, content = :content, category_id = :category_id, image = :image
                     WHERE id = :id";
             $params = [
-                'title' => $title,
-                'subtitle' => $subtitle,
-                'content' => $content,
-                'category_id' => $category_id,
-                'image' => $image,
-                'id' => $id
+                'title'         => $title,
+                'subtitle'      => $subtitle,
+                'content'       => $content,
+                'category_id'   => $category_id,
+                'image'         => $image,
+                'id'            => $id
             ];
         } else {
             $sql = "UPDATE announcements
                     SET title = :title, subtitle = :subtitle, content = :content, category_id = :category_id
                     WHERE id = :id";
             $params = [
-                'title' => $title,
-                'subtitle' => $subtitle,
-                'content' => $content,
-                'category_id' => $category_id,
-                'id' => $id
+                'title'         => $title,
+                'subtitle'      => $subtitle,
+                'content'       => $content,
+                'category_id'   => $category_id,
+                'id'            => $id
             ];
         }
         $stmt = $this->pdo->prepare($sql);
@@ -78,8 +79,7 @@ class Announcement
     // Delete an announcement
     public function delete($id)
     {
-        $sql = 'DELETE FROM announcements WHERE id = :id';
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['id' => $id]);
+        $stmt = $this->pdo->prepare('DELETE FROM announcements WHERE id = :id');
+        return $stmt->execute(['id' => $id]);
     }
 }

@@ -113,6 +113,7 @@ header {
 .auth-link {
     display: flex;
     align-items: center;
+    margin-left: auto;
     gap: 1rem;
 }
 
@@ -127,6 +128,13 @@ header {
     object-fit: cover;
     border: 2px solid #eebbc3;
     margin-right: 8px;
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-right: 1rem;
 }
 
 /* === Container & Footer === */
@@ -322,6 +330,19 @@ input[type="submit"].button:hover {
     box-shadow: 0 2px 12px rgba(35, 41, 70, 0.08);
     padding: 2rem;
     text-align: center;
+}
+
+/* === Connexion page === */
+.avatar-selection {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.avatar-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* === Admin Panel === */

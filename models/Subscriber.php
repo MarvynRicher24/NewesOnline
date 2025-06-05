@@ -3,6 +3,11 @@ class Subscriber
 {
     private $pdo;
 
+    public function __construct($pdo)
+    {
+        $this->pdo = $pdo;
+    }
+
     // FIND BY EMAIL
     public function findByEmail($email)
     {
@@ -19,11 +24,6 @@ class Subscriber
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function __construct($pdo)
-    {
-        $this->pdo = $pdo;
-    }
-
     // FIND BY USERNAME
     public function findByUsername($username)
     {
@@ -35,35 +35,42 @@ class Subscriber
     // CREATE SUSCRIBER
     public function create($username, $email, $passwordHash, $avatar = null, $description = null)
     {
-        $sql = 'INSERT INTO subscriber (username,email,password,avatar,description) VALUES (:username,:email,:password,:avatar,:description)';
-        return $this->pdo->prepare($sql)->execute([
-            'username' => $username,
-            'email' => $email,
-            'password' => $passwordHash,
-            'avatar' => $avatar,
-            'description' => $description
+        $sql = 'INSERT INTO subscriber (username, email, password, avatar, description) 
+                VALUES (:username, :email, :password, :avatar, :description)';
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            'username'      => $username,
+            'email'         => $email,
+            'password'      => $passwordHash,
+            'avatar'        => $avatar,
+            'description'   => $description
         ]);
     }
 
     // UPDATE SUSCRIBER
     public function updateProfile($id, $username, $email, $passwordHash = null, $avatar = null, $description = null)
     {
-        $sql = 'UPDATE subscriber SET username=:username,email=:email';
-        $params = ['username' => $username, 'email' => $email, 'id' => $id];
+        $sql = 'UPDATE subscriber SET username=:username, email=:email';
+        $params = [
+            'username'  => $username, 
+            'email'     => $email, 
+            'id'        => $id];
         if ($passwordHash) {
-            $sql .= ',password=:password';
+            $sql .= ', password = :password';
             $params['password'] = $passwordHash;
         }
         if ($avatar) {
-            $sql .= ',avatar=:avatar';
+            $sql .= ',avatar = :avatar';
             $params['avatar'] = $avatar;
         }
         if ($description !== null) {
-            $sql .= ',description=:description';
+            $sql .= ',description = :description';
             $params['description'] = $description;
         }
-        $sql .= ' WHERE id=:id';
-        return $this->pdo->prepare($sql)->execute($params);
+        $sql .= ' WHERE id = :id';
+
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute($params);
     }
 
     // DELETE SUSCRIBER

@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 try {
     $pdo = new PDO('mysql:host=localhost;dbname=dwwm;charset=utf8', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

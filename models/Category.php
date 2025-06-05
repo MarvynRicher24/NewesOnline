@@ -14,8 +14,7 @@ class Category
 
     public function create($name)
     {
-        $sql = "INSERT INTO category (name) VALUES (:name)";
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->pdo->prepare("INSERT INTO category (name) VALUES (:name)");
         $stmt->execute(['name' => $name]);
         return $this->pdo->lastInsertId();
     }
