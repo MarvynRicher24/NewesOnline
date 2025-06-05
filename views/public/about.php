@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'À propos';
+$pageTitle = 'About';
 include __DIR__ . '/../partials/header.php';
 ?>
 

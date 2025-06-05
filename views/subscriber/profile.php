@@ -9,7 +9,7 @@ include __DIR__ . '/../partials/header.php';
     <?php endif; ?>
 
     <div class="profile-info">
-        <p><strong>Pseudo :</strong> <?= htmlspecialchars($subscriber['username']) ?></p>
+        <p><strong>Username :</strong> <?= htmlspecialchars($subscriber['username']) ?></p>
         <p><strong>Email :</strong> <?= htmlspecialchars($subscriber['email']) ?></p>
         <?php if (!empty($subscriber['description'])): ?>
             <p><strong>Description :</strong> <?= nl2br(htmlspecialchars($subscriber['description'])) ?></p>

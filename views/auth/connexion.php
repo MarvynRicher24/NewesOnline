@@ -16,7 +16,7 @@ include __DIR__ . '/../partials/header.php';
         <h2>Register</h2>
         <form action="index.php?controller=auth&action=register" method="post" enctype="multipart/form-data">
 
-            <label>Pseudo :</label>
+            <label>Username :</label>
             <input name="username" required value="<?= isset($_POST['username']) ? htmlspecialchars($_POST["username"]) : '' ?>">
 
 
@@ -61,7 +61,7 @@ include __DIR__ . '/../partials/header.php';
         <form action="index.php?controller=auth&action=connexion" method="post">
 
             <label>Username :</label>
-                <input type="text" name="username ou Email" required value="<?= isset($_POST['username']) ? htmlspecialchars($_POST["username"]) : '' ?>">
+                <input type="text" name="usernameOrEmail" required value="<?= isset($_POST['username']) ? htmlspecialchars($_POST["username"]) : '' ?>">
 
             <label>Password :</label>
                 <input type="password" name="password" required>

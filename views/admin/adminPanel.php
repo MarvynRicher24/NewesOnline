@@ -84,7 +84,7 @@ include __DIR__ . '/../partials/header.php';
                 </svg>
             </a>
             <p>No announcements.</p>
-            <p>Click to create your first one!</p>
+            <p>Click to create your first one !</p>
         </div>
     </div>
 <?php endif; ?>

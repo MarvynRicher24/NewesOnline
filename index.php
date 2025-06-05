@@ -3,7 +3,7 @@
 session_start();
 
 require_once __DIR__ . '/models/Subscriber.php';
-require_once __DIR__ . '/models/AdminUser.php'
+require_once __DIR__ . '/models/AdminUser.php';
 
 try {
     $pdo = new PDO('mysql:host=localhost;dbname=dwwm;charset=utf8', 'root', '');

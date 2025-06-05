@@ -1,7 +1,7 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
-// $subscriber doit être passé à la vue par le contrôleur si connecté
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

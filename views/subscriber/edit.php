@@ -4,7 +4,7 @@ include __DIR__ . '/../partials/header.php';
 ?>
 
 <a href="index.php?controller=profile&action=profile" class="buttonReturn">Return</a>
-<h2>My profil</h2>
+<h2>My profile</h2>
 
 <?php if (!empty($_SESSION['flash_message'])): ?>
     <div class="popup-success" id="flash-popup"><?= htmlspecialchars($_SESSION['flash_message']) ?></div>
@@ -22,7 +22,7 @@ include __DIR__ . '/../partials/header.php';
 
 <form action="index.php?controller=profile&action=update" method="post" enctype="multipart/form-data">
 
-    <label>Pseudo :</label>
+    <label>Username :</label>
     <input name="username" value="<?= htmlspecialchars($subscriber['username']) ?>" required>
 
     <label>Email:</label>
