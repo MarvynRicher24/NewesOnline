@@ -13,7 +13,6 @@ class SubscriberController
     // Show profile
     public function profile()
     {
-        session_start();
         if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'subscriber') {
             header('Location: index.php?controller=auth&action=connexion');
             exit;
@@ -27,7 +26,6 @@ class SubscriberController
     // Edit profile
     public function edit()
     {
-        session_start();
         if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'subscriber') {
             header('Location: index.php?controller=auth&action=connexion');
             exit;
@@ -53,7 +51,6 @@ class SubscriberController
 
     public function update()
     {
-        session_start();
         if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'subscriber') {
             header('Location: index.php?controller=auth&action=connexion');
             exit;

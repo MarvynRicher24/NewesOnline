@@ -1,7 +1,8 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) session_start();
-?>
 
+// session has already been started in index.php
+global $subscriber;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,30 +19,56 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         <div class="header-inner">
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index.php" <?= (!isset($_GET['controller']) || $_GET['controller'] === 'home') ? 'class="active"' : '' ?>>Home</a></li>
-                    <li><a href="index.php?controller=about" <?= (isset($_GET['controller']) && $_GET['controller'] === 'about') ? 'class="active"' : '' ?>>About</a></li>
+                    <li>
+                        <a href="index.php"
+                            <?= (!isset($_GET['controller']) || $_GET['controller'] === 'home') ? 'class="active"' : '' ?>>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.php?controller=about"
+                            <?= (isset($_GET['controller']) && $_GET['controller'] === 'about') ? 'class="active"' : '' ?>>
+                            About
+                        </a>
+                    </li>
+
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                        <li><a href="index.php?controller=admin" <?= (isset($_GET['controller']) && $_GET['controller'] === 'admin') ? 'class="active"' : '' ?>>Admin Panel</a></li>
+                        <li>
+                            <a href="index.php?controller=admin"
+                                <?= (isset($_GET['controller']) && $_GET['controller'] === 'admin') ? 'class="active"' : '' ?>>
+                                Admin Panel
+                            </a>
+                        </li>
                     <?php endif; ?>
                 </ul>
             </nav>
 
             <div class="auth-link">
+                <!-- If subscriber is logged in, show avatar + username and link to profile -->
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'subscriber' && !empty($subscriber)): ?>
                     <a href="index.php?controller=profile&action=profile" class="profile-link">
                         <?php if (!empty($subscriber['avatar'])): ?>
-                            <img src="public/uploads/avatar/<?= htmlspecialchars($subscriber['avatar']) ?>" alt="Avatar <?= htmlspecialchars($subscriber['username']) ?>" class="avatar">
+                            <img
+                                src="public/uploads/avatar/<?= htmlspecialchars($subscriber['avatar']) ?>"
+                                alt="Avatar <?= htmlspecialchars($subscriber['username']) ?>"
+                                class="avatar">
                         <?php endif; ?>
                         <span><?= htmlspecialchars($subscriber['username']) ?></span>
                     </a>
                 <?php endif; ?>
 
+                <!-- If any user (admin or subscriber) is logged in, show Logout -->
                 <?php if (isset($_SESSION['role'])): ?>
                     <a href="index.php?controller=auth&action=logout" class="button">Logout</a>
                 <?php else: ?>
-                    <a href="index.php?controller=auth&action=connexion" class="button <?= (isset($_GET['action']) && $_GET['action'] === 'connexion') ? 'active' : '' ?>">Login</a>
+                    <!-- Otherwise, show Login link -->
+                    <a href="index.php?controller=auth&action=connexion"
+                        class="button <?= (isset($_GET['action']) && $_GET['action'] === 'connexion') ? 'active' : '' ?>">
+                        Login
+                    </a>
                 <?php endif; ?>
             </div>
         </div>
     </header>
-    <main>
+
+    <main class="container">

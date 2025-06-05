@@ -61,7 +61,7 @@ include __DIR__ . '/../partials/header.php';
         <form action="index.php?controller=auth&action=connexion" method="post">
 
             <label>Username :</label>
-                <input type="text" name="usernameOrEmail" required value="<?= isset($_POST['username']) ? htmlspecialchars($_POST["username"]) : '' ?>">
+                <input type="text" name="usernameOrEmail" required value="<?= isset($_POST['usernameOrEmail']) ? htmlspecialchars($_POST["usernameOrEmail"]) : '' ?>">
 
             <label>Password :</label>
                 <input type="password" name="password" required>
