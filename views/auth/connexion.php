@@ -11,9 +11,9 @@ include __DIR__ . '/../partials/header.php';
 </div>
 
 <?php if (isset($_GET['action']) && $_GET['action'] === 'register'): ?>
-    <!-- Inscription form -->
+    <!-- Register form -->
     <div class="form-container">
-        <h2>Inscription</h2>
+        <h2>Register</h2>
         <form action="index.php?controller=auth&action=register" method="post" enctype="multipart/form-data">
 
             <label>Pseudo :</label>
@@ -21,48 +21,50 @@ include __DIR__ . '/../partials/header.php';
 
 
             <label>Email :</label>
-                <input type="email" name="email" required value="<?= isset($_POST['email']) ? htmlspecialchars($_POST["email"]) : '' ?>">
+            <input type="email" name="email" required value="<?= isset($_POST['email']) ? htmlspecialchars($_POST["email"]) : '' ?>">
 
             <label>Password :</label>
-                <input type="password" name="password" required>
+            <input type="password" name="password" required>
 
             <label>Choose your Avatar :</label>
-                <div class="avatar-selection">
-                    <?php if (!empty($avatars)): ?>
-                        <?php foreach ($avatars as $avatarFile): ?>
+            <div class="avatar-selection">
+                <?php if (!empty($avatars)): ?>
+                    <?php foreach ($avatars as $avatarFile): ?>
 
-                            <label class="avatar-option">
-                                <input type="radio" name="avatar" value="<?= htmlspecialchars($avatar) ?>" required>
-                                <img src="public/uploads/avatar/<?= htmlspecialchars($avatar) ?>" alt="Avatar" style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ccc;">
-                            
+                        <label class="avatar-option">
+                            <input type="radio" name="avatar" value="<?= htmlspecialchars($avatarFile) ?>" <?= (isset($_POST['avatar']) && $_POST['avatar'] === $avatarFile) ? 'checked' : '' ?> required>
+                            <img src="public/uploads/avatar/<?= htmlspecialchars($avatarFile) ?>" alt="Avatar choice" class="avatar-choice">
+                        </label>
 
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p>No avatars available.</p>
-                    <?php endif; ?>
-                </div>
-
-                <label>Description:<textarea name="description"></textarea></label>
-                <button type="submit">Inscription</button>
-
-                <?php if (!empty($register_error)): ?>
-                    <p class="error"><?= htmlspecialchars($register_error) ?></p>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No avatars available.</p>
                 <?php endif; ?>
+            </div>
+
+            <label>Description :</label>
+            <textarea name="description"><?= isset($_POST['description']) ? htmlspecialchars($_POST['description']) : '' ?></textarea>
+
+            <button type="submit" name="register" class="button">Inscription</button>
+
+            <?php if (!empty($register_error)): ?>
+                <p class="error"><?= htmlspecialchars($register_error) ?></p>
+            <?php endif; ?>
         </form>
     </div>
 
 <?php else: ?>
 
     <!-- Connexion -->
-    <div id="login-form">
-        <h2 style="margin-top: 10px;">Login</h2>
+    <div class="form-container">
+        <h2>Login</h2>
         <form action="index.php?controller=auth&action=connexion" method="post">
 
-            <label>Username:
-                <input name="username" required></label>
+            <label>Username :</label>
+                <input type="text" name="username ou Email" required value="<?= isset($_POST['username']) ? htmlspecialchars($_POST["username"]) : '' ?>">
 
-            <label>Password:
-                <input type="password" name="password" required></label>
+            <label>Password :</label>
+                <input type="password" name="password" required>
 
             <button class="button" name="connexion" type="submit">Connexion</button>
 

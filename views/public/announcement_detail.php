@@ -1,14 +1,15 @@
-<?php include __DIR__ . '/../partials/header.php'; ?>
+<?php
+$pageTitle = htmlspecialchars($announcement['title']);
+include __DIR__ . '/../partials/header.php';
+?>
 
-<a href="index.php?controller=home&action=index" class="buttonReturn">Return</a>
+<a href="index.php" class="buttonReturn">Return</a>
 
 <div class="detail-container">
     <h2><?= htmlspecialchars($announcement['title']) ?></h2>
 
     <?php if (!empty($announcement['subtitle'])): ?>
-        <h3 style="margin: 0.5rem 0; font-size: 1.2rem; color: #555;">
-            <?= htmlspecialchars($announcement['subtitle']) ?>
-        </h3>
+        <h3><?= htmlspecialchars($announcement['subtitle']) ?></h3>
     <?php endif; ?>
 
     <?php if ($announcement['category_name']): ?>

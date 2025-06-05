@@ -19,7 +19,7 @@ class AuthController
         $error = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['connexion'])) {
-            $usernameOrEmail = trim($_POST['username']);
+            $usernameOrEmail = $_POST['username'];
             $password = $_POST['password'];
 
             // Verify if it's an admin
