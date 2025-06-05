@@ -1,13 +1,16 @@
 <?php
-if (!isset($announcement)) {
-    $announcement = [];
-}
+$pageTitle = isset($announcement['id']) ? 'Edit announcement' : 'Create announcement';
+include __DIR__ . '/../partials/header.php';
 ?>
-<?php include __DIR__ . '/../partials/header.php'; ?>
 
-<a href="index.php?controller=admin" class="buttonReturn">Return</a>
+<a href="index.php?controller=admin&action=index" class="buttonReturn">Return</a>
 
-<h2><?= isset($announcement['id']) ? 'Edit' : 'Add' ?> announcement</h2>
+<h2><?= isset($announcement['id']) ? 'Edit this announcement' : 'Add a new announcement' ?></h2>
+
+<?php if (!empty($error)): ?>
+    <p class="error"><?= htmlspecialchars(($error)) ?></p>
+<?php endif; ?>
+
 <form action="index.php?controller=admin&action=<?= isset($announcement['id']) ? 'edit&id=' . $announcement['id'] : 'add' ?>" method="post" enctype="multipart/form-data">
     <label>Title:</label>
     <input type="text" name="title" value="<?= htmlspecialchars($announcement['title'] ?? '') ?>" maxlength="255" required>
@@ -37,6 +40,6 @@ if (!isset($announcement)) {
     <label>Image:</label>
     <input type="file" name="image" accept="image/*">
 
-    <button type="submit"><?= isset($announcement['id']) ? 'Update' : 'Create' ?></button>
+    <button type="submit" class="button"><?= isset($announcement['id']) ? 'Update' : 'Create' ?></button>
 </form>
 <?php include __DIR__ . '/../partials/footer.php'; ?>

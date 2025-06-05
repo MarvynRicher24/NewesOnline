@@ -11,7 +11,7 @@ class Announcement
     // Get the categories
     public function getAll()
     {
-        $sql = "SELECT a.*, c.name AS category_name 
+        $sql = "SELECT a.*, c.name AS category_name
                 FROM announcements a
                 LEFT JOIN category c ON a.category_id = c.id
                 ORDER BY a.created_at DESC";
