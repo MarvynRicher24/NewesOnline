@@ -12,6 +12,10 @@ include __DIR__ . '/../partials/header.php';
 <?php endif; ?>
 
 <form action="index.php?controller=admin&action=<?= isset($announcement['id']) ? 'edit&id=' . $announcement['id'] : 'add' ?>" method="post" enctype="multipart/form-data">
+
+    <!-- CSRF token -->
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+    
     <label>Title:</label>
     <input type="text" name="title" value="<?= htmlspecialchars($announcement['title'] ?? '') ?>" maxlength="255" required>
 

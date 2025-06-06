@@ -37,11 +37,11 @@ class Announcement
                 VALUES (:title, :subtitle, :content, :category_id, :image)';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
-            'title'         => $title,
-            'subtitle'      => $subtitle,
-            'content'       => $content,
-            'category_id'   => $category_id,
-            'image'         => $image
+            'title'       => $title,
+            'subtitle'    => $subtitle,
+            'content'     => $content,
+            'category_id' => $category_id,
+            'image'       => $image
         ]);
     }
 
@@ -53,23 +53,23 @@ class Announcement
                     SET title = :title, subtitle = :subtitle, content = :content, category_id = :category_id, image = :image
                     WHERE id = :id";
             $params = [
-                'title'         => $title,
-                'subtitle'      => $subtitle,
-                'content'       => $content,
-                'category_id'   => $category_id,
-                'image'         => $image,
-                'id'            => $id
+                'title'       => $title,
+                'subtitle'    => $subtitle,
+                'content'     => $content,
+                'category_id' => $category_id,
+                'image'       => $image,
+                'id'          => $id
             ];
         } else {
             $sql = "UPDATE announcements
                     SET title = :title, subtitle = :subtitle, content = :content, category_id = :category_id
                     WHERE id = :id";
             $params = [
-                'title'         => $title,
-                'subtitle'      => $subtitle,
-                'content'       => $content,
-                'category_id'   => $category_id,
-                'id'            => $id
+                'title'       => $title,
+                'subtitle'    => $subtitle,
+                'content'     => $content,
+                'category_id' => $category_id,
+                'id'          => $id
             ];
         }
         $stmt = $this->pdo->prepare($sql);

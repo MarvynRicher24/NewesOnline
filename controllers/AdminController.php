@@ -17,9 +17,9 @@ class AdminController
             exit;
         }
 
-        $this->pdo = $pdo;
+        $this->pdo               = $pdo;
         $this->announcementModel = new Announcement($pdo);
-        $this->categoryModel = new Category($pdo);
+        $this->categoryModel     = new Category($pdo);
     }
 
     // List all announcements with edit/delete options
@@ -33,13 +33,24 @@ class AdminController
     public function add()
     {
         $categories = $this->categoryModel->getAll();
-        $error = '';
+        $error      = '';
+
+        // CSRF check on POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (
+                empty($_POST['csrf_token']) ||
+                !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+            ) {
+                // Token missing or invalid: reject the request
+                die('CSRF validation failed.');
+            }
+        }
 
         // Handle form submission
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $title = trim(string: $_POST['title']);
-            $subtitle = trim(string: $_POST['subtitle']);
-            $content = trim(string: $_POST['content']);
+            $title      = trim(string: $_POST['title']);
+            $subtitle   = trim(string: $_POST['subtitle']);
+            $content    = trim(string: $_POST['content']);
             $categoryId = intval($_POST['category_id']);
 
             // Minimum validation
@@ -57,7 +68,7 @@ class AdminController
                             $error = "Uploaded file is not a valid image";
                         } else {
                             $imageName = uniqid() . '_' . basename($_FILES['image']['name']);
-                            $target = __DIR__ . '/../public/uploads/' . $imageName;
+                            $target    = __DIR__ . '/../public/uploads/' . $imageName;
                             if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
                                 $image = $imageName;
                             } else {
@@ -95,18 +106,28 @@ class AdminController
         }
 
         $categories = $this->categoryModel->getAll();
-        $error = '';
+        $error      = '';
+
+        // CSRF check
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (
+                empty($_POST['csrf_token']) ||
+                !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+            ) {
+                // Token missing or invalid: reject the request
+                die('CSRF validation failed.');
+            }
+        }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $title = trim($_POST['title']);
-            $subtitle = trim($_POST['subtitle']);
-            $content = trim($_POST['content']);
+            $title      = trim($_POST['title']);
+            $subtitle   = trim($_POST['subtitle']);
+            $content    = trim($_POST['content']);
             $categoryId = intval($_POST['category_id']);
 
             if (empty($title) || empty($content) || !$categoryId) {
                 $error = "Please fill in all required files";
             } else {
-
                 // Handle file upload if an image was provided
                 $image = null;
                 if (!empty($_FILES['image']['name'])) {

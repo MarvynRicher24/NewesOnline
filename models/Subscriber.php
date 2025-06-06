@@ -39,11 +39,11 @@ class Subscriber
                 VALUES (:username, :email, :password, :avatar, :description)';
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
-            'username'      => $username,
-            'email'         => $email,
-            'password'      => $passwordHash,
-            'avatar'        => $avatar,
-            'description'   => $description
+            'username'    => $username,
+            'email'       => $email,
+            'password'    => $passwordHash,
+            'avatar'      => $avatar,
+            'description' => $description
         ]);
     }
 
@@ -52,9 +52,9 @@ class Subscriber
     {
         $sql = 'UPDATE subscriber SET username=:username, email=:email';
         $params = [
-            'username'  => $username, 
-            'email'     => $email, 
-            'id'        => $id];
+            'username' => $username, 
+            'email'    => $email, 
+            'id'       => $id];
         if ($passwordHash) {
             $sql .= ', password = :password';
             $params['password'] = $passwordHash;

@@ -18,15 +18,26 @@ class AuthController
     {
         $error = '';
 
+        // Only validate CSRF if this is a POST submission
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (
+                empty($_POST['csrf_token']) ||
+                !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+            ) {
+                // Token missing or invalid: reject the request
+                die('CSRF validation failed.');
+            }
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['connexion'])) {
             $usernameOrEmail = $_POST['usernameOrEmail'];
-            $password = $_POST['password'];
+            $password        = $_POST['password'];
 
             // Verify if it's an admin
             $adminModel = new AdminUser($this->pdo);
-            $admin = $adminModel->findByUsername($usernameOrEmail);
+            $admin      = $adminModel->findByUsername($usernameOrEmail);
             if ($admin && password_verify($password, $admin['password'])) {
-                $_SESSION['role'] = 'admin';
+                $_SESSION['role']    = 'admin';
                 $_SESSION['user_id'] = $admin['id'];
                 header('Location: index.php?controller=admin&action=index');
                 exit;
@@ -34,12 +45,12 @@ class AuthController
 
             // if else, verify if it's a subscriber
             $subscriberModel = new Subscriber($this->pdo);
-            $user = $subscriberModel->findByUsername($usernameOrEmail);
+            $user            = $subscriberModel->findByUsername($usernameOrEmail);
             if (!$user) {
                 $user = $subscriberModel->findByEmail($usernameOrEmail);
             }
             if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['role'] = 'subscriber';
+                $_SESSION['role']    = 'subscriber';
                 $_SESSION['user_id'] = $user['id'];
                 header('Location: index.php?controller=profile&action=profile');
                 exit;
@@ -67,11 +78,22 @@ class AuthController
             }
         }
 
+        // CSRF validation
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (
+                empty($_POST['csrf_token']) ||
+                !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+            ) {
+                // Token missing or invalid: reject the request
+                die('CSRF validation failed.');
+            }
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
-            $username = $_POST['username'];
-            $email = $_POST['email'];
+            $username    = $_POST['username'];
+            $email       = $_POST['email'];
             $rawPassword = $_POST['password'];
-            $avatar = $_POST['avatar']; // Select the name of the file
+            $avatar      = $_POST['avatar']; // Select the name of the file
             $description = $_POST['description'] ?? '';
 
             // Minimal validation

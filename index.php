@@ -9,15 +9,22 @@ try {
     die('Db connexion error : ' . $e->getMessage());
 }
 
+// CSRF Token generation
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Load $subscriber if role = subscriber, so that header.php can use it
 $subscriber = null;
-if (isset($_SESSION['role']) && $_SESSION['role'] === 'subscriber' && isset($_SESSION['user_id'])) {
+if (isset($_SESSION['role'], $_SESSION['user_id']) && $_SESSION['role'] === 'subscriber') {
     require_once __DIR__ . '/models/Subscriber.php';
     $subscriberModelInit = new Subscriber($pdo);
     $subscriber = $subscriberModelInit->findById($_SESSION['user_id']);
 }
 
-$controller = $_GET['controller'] ?? 'home';
-$action = $_GET['action'] ?? 'index';
+// Dispatch to controllers
+$controller = $_GET['controller']   ?? 'home';
+$action     = $_GET['action']       ?? 'index';
 
 require_once __DIR__ . '/models/Subscriber.php';
 require_once __DIR__ . '/models/AdminUser.php';

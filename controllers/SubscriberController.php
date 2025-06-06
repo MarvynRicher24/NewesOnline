@@ -56,17 +56,28 @@ class SubscriberController
             exit;
         }
 
+        // CSRF check
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (
+                empty($_POST['csrf_token']) ||
+                !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+            ) {
+                // Token missing or invalid: reject the request
+                die('CSRF validation failed.');
+            }
+        }
+
         $subscriberModel = new Subscriber($this->pdo);
-        $validator = $subscriberModel->findById($_SESSION['user_id']);
+        $validator       = $subscriberModel->findById($_SESSION['user_id']);
         if (!$validator) {
             header('Location: index.php?controller=auth&action=connexion');
             exit;
         }
 
-        $username = trim($_POST['username']);
-        $email = trim($_POST['email']);
-        $description = trim($_POST['description'] ?? '');
-        $avatar = $_POST['avatar'] ?? null;
+        $username        = trim($_POST['username']);
+        $email           = trim($_POST['email']);
+        $description     = trim($_POST['description'] ?? '');
+        $avatar          = $_POST['avatar'] ?? null;
         $newPasswordHash = null;
 
         if (!empty($_POST['password'])) {

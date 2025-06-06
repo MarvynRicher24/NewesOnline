@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Connexion';
+$pageTitle = 'Connexion/Register';
 include __DIR__ . '/../partials/header.php';
 ?>
 
@@ -15,6 +15,8 @@ include __DIR__ . '/../partials/header.php';
     <div class="form-container">
         <h2>Register</h2>
         <form action="index.php?controller=auth&action=register" method="post" enctype="multipart/form-data">
+            <!-- CSRF token -->
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
             <label>Username :</label>
             <input name="username" required value="<?= isset($_POST['username']) ? htmlspecialchars($_POST["username"]) : '' ?>">
@@ -60,11 +62,14 @@ include __DIR__ . '/../partials/header.php';
         <h2>Login</h2>
         <form action="index.php?controller=auth&action=connexion" method="post">
 
+            <!-- CSRF token -->
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+
             <label>Username :</label>
-                <input type="text" name="usernameOrEmail" required value="<?= isset($_POST['usernameOrEmail']) ? htmlspecialchars($_POST["usernameOrEmail"]) : '' ?>">
+            <input type="text" name="usernameOrEmail" required value="<?= isset($_POST['usernameOrEmail']) ? htmlspecialchars($_POST["usernameOrEmail"]) : '' ?>">
 
             <label>Password :</label>
-                <input type="password" name="password" required>
+            <input type="password" name="password" required>
 
             <button class="button" name="connexion" type="submit">Connexion</button>
 

@@ -22,6 +22,9 @@ include __DIR__ . '/../partials/header.php';
 
 <form action="index.php?controller=profile&action=update" method="post" enctype="multipart/form-data">
 
+    <!-- CSRF token -->
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+
     <label>Username :</label>
     <input name="username" value="<?= htmlspecialchars($subscriber['username']) ?>" required>
 
