@@ -82,4 +82,18 @@ class Announcement
         $stmt = $this->pdo->prepare('DELETE FROM announcements WHERE id = :id');
         return $stmt->execute(['id' => $id]);
     }
+
+    // Average notes
+    public function getAverageRating($announcementId)
+    {
+        $commentModel = new Comment($this->pdo);
+        return $commentModel->getAverageRating($announcementId);
+    }
+
+    // Return list of comments
+    public function getComments($announcementId)
+    {
+        $commentModel = new Comment($this->pdo);
+        return $commentModel->getAllByAnnouncement($announcementId);
+    }
 }

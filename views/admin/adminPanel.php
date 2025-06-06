@@ -3,6 +3,21 @@ $pageTitle = 'Admin Panel';
 include __DIR__ . '/../partials/header.php';
 ?>
 
+<!-- Flash pop-up for create / update / delete -->
+<?php if (!empty($_SESSION['flash_message'])): ?>
+    <div class="popup-success" id="flash-popup-admin"><?= htmlspecialchars($_SESSION['flash_message']) ?></div>
+    <script>
+        setTimeout(function() {
+            const popup = document.getElementById('flash-popup-admin');
+            if (popup) {
+                popup.style.opacity = 'O';
+                setTimeout(() => popup.remove(), 500);
+            }
+        }, 2000);
+    </script>
+    <?php unset($_SESSION['flash_message']); ?>
+<?php endif; ?>
+
 <h2 style="text-align: center;">Manage Announcements</h2>
 
 <?php if (!empty($announcements)): ?>
@@ -75,7 +90,7 @@ include __DIR__ . '/../partials/header.php';
 
 <?php else: ?>
     <div class="createAnnouncement-container">
-        <!-- CREATE AN ANNOUNCEMENT BUTTON -->
+        <!-- Create an announcement button -->
         <div class="buttonCreateAnnouncement">
             <a href="index.php?controller=admin&action=add">
                 <svg width="60" height="60" viewBox="0 0 24 24" fill="none">

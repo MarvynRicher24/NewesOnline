@@ -3,14 +3,12 @@ $pageTitle = 'Edit Profile';
 include __DIR__ . '/../partials/header.php';
 ?>
 
-<a href="index.php?controller=profile&action=profile" class="buttonReturn">Return</a>
-<h2>My profile</h2>
-
+<!-- Show flash message immediately -->
 <?php if (!empty($_SESSION['flash_message'])): ?>
-    <div class="popup-success" id="flash-popup"><?= htmlspecialchars($_SESSION['flash_message']) ?></div>
+    <div class="popup-success" id="flash-popup-subscriber"><?= htmlspecialchars($_SESSION['flash_message']) ?></div>
     <script>
         setTimeout(function() {
-            const popup = document.getElementById('flash-popup');
+            const popup = document.getElementById('flash-popup-subscriber');
             if (popup) {
                 popup.style.opacity = '0';
                 setTimeout(() => popup.remove(), 500);
@@ -19,6 +17,9 @@ include __DIR__ . '/../partials/header.php';
     </script>
     <?php unset($_SESSION['flash_message']); ?>
 <?php endif; ?>
+
+<a href="index.php?controller=profile&action=profile" class="buttonReturn">Return</a>
+<h2>My profile</h2>
 
 <form action="index.php?controller=profile&action=update" method="post" enctype="multipart/form-data">
 

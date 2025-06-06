@@ -1,6 +1,8 @@
 <?php
-$pageTitle = 'latest Announcements';
+$pageTitle = 'Latest Announcements';
 include __DIR__ . '/../partials/header.php';
+require_once __DIR__ . '/../../models/Comment.php';
+global $pdo;
 ?>
 
 <h2>Latest Announcements</h2>
@@ -27,6 +29,19 @@ include __DIR__ . '/../partials/header.php';
 
                     <p><?= nl2br(htmlspecialchars(substr($announcement['content'], 0, 100))) ?>…</p>
                     <div class="meta-date">Posted on <?= date('F j, Y', strtotime($announcement['created_at'])) ?></div>
+
+                    <?php 
+                    $commentModel = new Comment($pdo);
+                    $avg = $commentModel->getAverageRating($announcement['id']); ?>
+
+                    <div class="average-rating-card">
+                        <?php if ($avg !== null): ?>
+                            Rating: <?= htmlspecialchars($avg) ?> / 5
+                        <?php else: ?>
+                            No rating yet
+                        <?php endif; ?>
+                    </div>
+
                     <a href="index.php?controller=announcement&action=show&id=<?= $announcement['id'] ?>" class="button">Read More</a>
                 </div>
             </div>

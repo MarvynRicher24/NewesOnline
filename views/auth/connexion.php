@@ -3,6 +3,21 @@ $pageTitle = 'Connexion/Register';
 include __DIR__ . '/../partials/header.php';
 ?>
 
+<!-- Flash pop-up for "registration success" -->
+<?php if (!empty($_SESSION['flash_message'])): ?>
+    <div class="popup-success" id="flash-popup-auth"><?= htmlspecialchars($_SESSION['flash_message']) ?></div>
+    <script>
+        setTimeout(function() {
+            const popup = document.getElementById('flash-popup-auth');
+            if (popup) {
+                popup.style.opacity = '0';
+                setTimeout(() => popup.remove(), 500);
+            }
+        }, 2000);
+    </script>
+    <?php unset($_SESSION['flash_message']); ?>
+<?php endif; ?>
+
 <div class="auth-container">
     <div class="class auth-button">
         <a href="index.php?controller=auth&action=connexion" class="button <?= (isset($_GET['action']) && $_GET['action'] === 'connexion') || !isset($_GET['action']) ? 'active' : '' ?>">Connexion</a>

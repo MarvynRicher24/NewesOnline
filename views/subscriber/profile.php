@@ -2,6 +2,22 @@
 $pageTitle = 'My profile';
 include __DIR__ . '/../partials/header.php';
 ?>
+
+<!-- Show pop-up edit success -->
+<?php if (!empty($_SESSION['flash_message'])): ?>
+    <div class="popup-success" id="flash-popup-profile"><?= htmlspecialchars($_SESSION['flash_message']) ?></div>
+    <script>
+        setTimeout(function() {
+            const popup = document.getElementById('flash-popup-profile');
+            if (popup) {
+                popup.style.opacity = '0';
+                setTimeout(() => popup.remove(), 500);
+            }
+        }, 2000);
+    </script>
+    <?php unset($_SESSION['flash_message']); ?>
+<?php endif; ?>
+
 <h2>My Profile</h2>
 <div class="profile-container">
     <?php if (!empty($subscriber['avatar'])): ?>
