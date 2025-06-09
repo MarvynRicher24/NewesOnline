@@ -54,19 +54,19 @@ img {
 }
 
 .popup-success {
-       position: fixed;
-       top: 30px;
-       right: 30px;
-       background: #4BB543;
-       color: #fff;
-       padding: 16px 32px;
-       border-radius: 8px;
-       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-       font-size: 1.1em;
-       z-index: 9999;
-       opacity: 0.95;
-       transition: opacity 0.5s;
-   }
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background: #4BB543;
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    font-size: 1.1em;
+    z-index: 9999;
+    opacity: 0.95;
+    transition: opacity 0.5s;
+}
 
 .popup-deleted {
     background-color: #e74c3c;
@@ -659,84 +659,105 @@ form button {
 /* ───────────────────────────────────────────────────────────────────────────────
    Styles pour la section des commentaires / rating sur announcement_detail
    ───────────────────────────────────────────────────────────────────────────── */
-   .average-rating-detail,
-   .average-rating-card {
-       margin: 0.8rem 0;
-       padding: 0.4rem 0.6rem;
-       background: #f0f0f0;
-       border-radius: 4px;
-       font-weight: 600;
-   }
-   
-   .comments-section {
-       margin-top: 2rem;
-   }
-   
-   .comment-block {
-       border-bottom: 1px solid #ddd;
-       padding: 0.8rem 0;
-   }
-   
-   .comment-header {
-       display: flex;
-       gap: 1rem;
-       font-size: 0.9rem;
-       color: #555;
-       margin-bottom: 0.4rem;
-   }
-   
-   .comment-author {
-       font-weight: bold;
-   }
-   
-   .comment-rating {
-       font-style: italic;
-   }
-   
-   .comment-text {
-       font-size: 0.95rem;
-       color: #333;
-   }
-   
-   .user-comment-form {
-       margin-top: 1.5rem;
-       padding: 1rem;
-       background: #fafafa;
-       border: 1px solid #eee;
-       border-radius: 6px;
-   }
-   
-   .user-comment-form h3 {
-       margin-bottom: 0.6rem;
-       font-size: 1.1rem;
-       color: #333;
-   }
-   
-   .user-comment-form label {
-       display: block;
-       margin-top: 0.8rem;
-       font-weight: 600;
-   }
-   
-   .user-comment-form select,
-   .user-comment-form textarea {
-       width: 100%;
-       padding: 0.6rem;
-       margin-top: 0.2rem;
-       border: 1px solid #ccc;
-       border-radius: 4px;
-   }
-   
-   .user-comment-form button {
-       margin-top: 1rem;
-   }
-   
-   .delete-comment-btn {
-       display: inline-block;
-       margin-bottom: 0.6rem;
-       font-size: 0.9rem;
-       padding: 0.4rem 0.8rem;
-   }
+/* ==== Stars SVG ==== */
+.icon-star {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5;
+    transition: fill 0.2s, stroke 0.2s;
+}
+
+.icon-star.filled {
+    fill: #f1c40f;
+    stroke: #f1c40f;
+}
+
+/* ==== Lecture seule ==== */
+.stars-readonly {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.rating-number {
+    margin-left: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* ==== Saisie interactive ==== */
+.rating-input {
+    margin: 1rem 0;
+}
+
+.star-widget {
+    display: flex;
+    flex-direction: row-reverse;
+    /* pour que la logique de data-value descende */
+    gap: 4px;
+}
+
+.star-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.star-btn .icon-star {
+    width: 32px;
+    height: 32px;
+}
+
+.star-btn.filled .icon-star {
+    fill: #e67e22;
+    stroke: #e67e22;
+}
+
+.star-btn:hover .icon-star {
+    fill: #d35400;
+    stroke: #d35400;
+}
+
+/* ==== Modernisation des commentaires ==== */
+.comments-section {
+    margin-top: 2rem;
+}
+
+.comment-block {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: #34495e;
+}
+
+.comment-date {
+    margin-left: auto;
+    font-size: 0.85rem;
+    color: #95a5a6;
+}
+
+.comment-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #2c3e50;
+}
+
 
 /* ==============================================
    Responsive (Tablet, smartphone)

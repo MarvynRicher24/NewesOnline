@@ -29,7 +29,7 @@ class Comment
     public function create($subId, $annId, $rating, $commentText)
     {
         $sql = "INSERT INTO comments
-                    (subscriber_id, anouncement_id, rating, comment)
+                    (subscriber_id, announcement_id, rating, comment)
                 VALUES
                     (:subId, :annId, :rating, :comment)";
         $stmt = $this->pdo->prepare($sql);

@@ -30,17 +30,29 @@ global $pdo;
                     <p><?= nl2br(htmlspecialchars(substr($announcement['content'], 0, 100))) ?>…</p>
                     <div class="meta-date">Posted on <?= date('F j, Y', strtotime($announcement['created_at'])) ?></div>
 
-                    <?php 
-                    $commentModel = new Comment($pdo);
-                    $avg = $commentModel->getAverageRating($announcement['id']); ?>
+                    <?php
+                    $cm = new Comment($pdo);
+                    $avg = $cm->getAverageRating($announcement['id']);
+                    $fullCount = $avg !== null ? floor($avg) : 0;
+                    $halfCount = $avg !== null && ($avg - $fullCount) >= 0.5 ? 1 : 0;
+                    $emptyCount = 5 - $fullCount - $halfCount;
+                    $fullPath = 'public/uploads/stars/fullStars.png';
+                    $halfPath = 'public/uploads/stars/halfStars.png';
+                    $emptyPath = 'public/uploads/stars/emptyStars.png';
+                    ?>
 
-                    <div class="average-rating-card">
-                        <?php if ($avg !== null): ?>
-                            Rating: <?= htmlspecialchars($avg) ?> / 5
-                        <?php else: ?>
-                            No rating yet
-                        <?php endif; ?>
+                    <div class="stars-readonly">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <svg class="icon-star <?= $i <= round($avg) ? 'filled' : '' ?>" viewBox="0 0 24 24">
+                                <polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9" />
+                            </svg>
+                        <?php endfor; ?>
+                        <span class="visually-hidden">
+                            <?= $avg !== null ? htmlspecialchars($avg) . '/5' : '—/5' ?>
+                        </span>
+
                     </div>
+
 
                     <a href="index.php?controller=announcement&action=show&id=<?= $announcement['id'] ?>" class="button">Read More</a>
                 </div>
