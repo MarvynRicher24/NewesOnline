@@ -8,6 +8,73 @@ class Announcement
         $this->pdo = $pdo;
     }
 
+    public function getPdo(): PDO
+    {
+        return $this->pdo;
+    }
+
+    // Get a paginated list, with optional search and category filter
+    public function getPaginated(int $limit, int $offset, ?string $search = null, ?int $categoryId = null): array
+    {
+        $sql = "SELECT a.*, c.name AS category_name
+                FROM announcements a
+                LEFT JOIN category c ON a.category_id = c.id";
+        $where = [];
+        $params = [];
+
+        if ($search !== null && $search !== '') {
+            $where[] = "(a.title LIKE :search OR a.subtitle LIKE :search OR a.content LIKE :search)";
+            $params['search'] = '%' . $search . '%';
+        }
+        if ($categoryId) {
+            $where[] = "a.category_id = :category_id";
+            $params['category_id'] = $categoryId;
+        }
+        if ($where) {
+            $sql .= ' WHERE ' . implode(' AND ', $where);
+        }
+
+        $sql .= " ORDER BY a.created_at DESC LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->pdo->prepare($sql);
+        foreach ($params as $key => $val) {
+            $stmt->bindValue($key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        }
+        $stmt->bindValue('limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Count total matching rows (for pagination)
+    public function getCount(?string $search = null, ?int $categoryId = null): int
+    {
+        $sql = "SELECT COUNT(*) FROM announcements a";
+        $where = [];
+        $params = [];
+
+        if ($search !== null && $search !== '') {
+            $where[] = "(a.title LIKE :search OR a.subtitle LIKE :search OR a.content LIKE :search)";
+            $params['search'] = '%' . $search . '%';
+        }
+        if ($categoryId) {
+            $where[] = "a.category_id = :category_id";
+            $params['category_id'] = $categoryId;
+        }
+        if ($where) {
+            $sql .= ' WHERE ' . implode(' AND ', $where);
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+        foreach ($params as $key => $val) {
+            $stmt->bindValue($key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        }
+        $stmt->execute();
+
+        return (int)$stmt->fetchColumn();
+    }
+
     // Get the categories
     public function getAll()
     {

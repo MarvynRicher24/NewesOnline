@@ -33,22 +33,17 @@ img {
    Pop-up Messages (flash)
    ============================================== */
 
-.popup-created,
-.popup-success,
-.popup-deleted {
+.popup-created {
     position: fixed;
     top: 30px;
     right: 30px;
-    padding: 14px 28px;
+    padding: 16px 32px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    font-size: 1.1em;
     z-index: 9999;
     opacity: 0.95;
     transition: opacity 0.5s;
-}
-
-.popup-created {
     background-color: #3498db;
     color: #fff;
 }
@@ -69,6 +64,16 @@ img {
 }
 
 .popup-deleted {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    padding: 16px 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    font-size: 1.1em;
+    z-index: 9999;
+    opacity: 0.95;
+    transition: opacity 0.5s;
     background-color: #e74c3c;
     color: #fff;
 }
@@ -138,10 +143,25 @@ header {
     border: 2px solid #ecf0f1;
 }
 
+.site-logo {
+    height: 40px;
+}
+
+/* Hide default menu & show toggle on mobile */
+.header-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #ecf0f1;
+}
+
 /* ==============================================
    Container
    ============================================== */
 main.container {
+    overflow: hidden;
     flex: 1;
     max-width: 1200px;
     margin: 0 auto;
@@ -182,17 +202,6 @@ footer {
 .button:hover,
 .buttonReturn:hover {
     background-color: #d35400;
-}
-
-.buttonReturn {
-    background-color: #7f8c8d;
-    width: 5rem;
-    text-align: center;
-    padding: 0.5rem 1rem;
-}
-
-.buttonReturn:hover {
-    background-color: #707b7c;
 }
 
 .error {
@@ -278,44 +287,66 @@ footer {
    Home
    ============================================== */
 .announcements-grid {
-    display: grid;
     gap: 2rem;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    margin-top: 2rem;
 }
 
 .announcement-card {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    position: relative;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .announcement-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-6px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
+/* Image container with overlay */
 .announcement-card img {
+    display: block;
     width: 100%;
     height: 180px;
     object-fit: cover;
-    border-bottom: 2px solid #e67e22;
 }
 
-.card-content {
-    padding: 1.2rem;
+.announcement-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent);
+    pointer-events: none;
+}
+
+/* Category badge */
+.announcement-card .card-category {
+    position: relative;
+    background: rgba(230, 126, 34, 0.9);
+    color: #fff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+* Content area */ .card-content {
+    padding: 1.4rem;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    gap: 0.6rem;
 }
 
 .card-content h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    margin: 0;
     color: #2C3E50;
 }
 
@@ -327,15 +358,121 @@ footer {
 
 .card-content p {
     flex: 1;
-    margin-bottom: 1rem;
+    color: #555;
+    line-height: 1.5;
+    margin: 0.6rem 0;
+}
+
+.card-content .meta-date {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.card-content .stars-readonly {
+    margin: 0.6rem 0;
+}
+
+/* ==== Search & Filter Form ==== */
+.search-filter-form {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.search-filter-form input[type="text"] {
+    flex: 2;
+}
+
+.search-filter-form select {
+    flex: 1;
+}
+
+
+
+/* ==== Improved grid on home ==== */
+.improved-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* ==== Card improvements ==== */
+.improved-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.improved-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* ==== ensure images keep ratio ==== */
+.card-image-container {
+    width: 100%;
+    padding-top: 50%;
+    /* 2:1 ratio */
+    position: relative;
+}
+
+.card-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ==== Excerpt styling ==== */
+.card-excerpt {
+    flex: 1;
+    margin: 0.8rem 0;
     color: #555;
     line-height: 1.4;
 }
 
-.card-content .meta-date {
-    font-size: 0.85rem;
-    color: #a0a0a0;
-    margin-bottom: 0.8rem;
+/* ==== Search & filter form ==== */
+.search-filter-form {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.search-filter-form input[type="text"] {
+    flex: 2;
+}
+
+.search-filter-form select {
+    flex: 1;
+}
+
+/* ==== Pagination ==== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2rem 0;
+}
+
+.pagination a {
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    background: #ecf0f1;
+    color: #2c3e50;
+}
+
+.pagination a.active {
+    background: #e67e22;
+    color: #fff;
 }
 
 /* ==============================================
@@ -764,13 +901,40 @@ form button {
    ============================================== */
 @media (max-width: 900px) {
 
-    .header-inner,
-    main.container {
-        padding: 1rem;
+    /* Stack header items */
+    .header-inner {
+        flex-wrap: wrap;
+        gap: 0.5rem;
     }
 
-    .announcements-grid {
-        grid-template-columns: 1fr;
+    /* Show toggle button */
+    .header-toggle {
+        display: block;
+        margin-left: auto;
+        margin-right: 5%;
+    }
+
+    /* Hide nav & auth by default */
+    .main-nav,
+    .auth-link {
+        display: none;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* When toggle is active (add .open on header-inner) */
+    .header-inner.open .main-nav,
+    .header-inner.open .auth-link {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        background: #2C3E50;
+        padding: 1rem 0;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        gap: 1rem;
     }
 }
 

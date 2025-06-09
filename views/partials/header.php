@@ -10,13 +10,24 @@ global $subscriber;
     <meta charset="UTF-8">
     <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) : 'NewesOnline' ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="public/uploads/logo/logo.jpg">
     <link rel="stylesheet" href="public/css/style.css">
 </head>
 
 <body>
 
     <header>
+        <button class="header-toggle" aria-label="Toggle menu">
+            &#9776; <!-- icône hamburger -->
+        </button>
+
         <div class="header-inner">
+            <a href="index.php" class="logo-link">
+                <img
+                    src="public/uploads/logo/logo.jpg"
+                    alt="NewesOnline Logo"
+                    class="site-logo">
+            </a>
             <nav class="main-nav">
                 <ul>
                     <li>
@@ -72,3 +83,8 @@ global $subscriber;
     </header>
 
     <main class="container">
+        <script>
+            document.querySelector('.header-toggle').addEventListener('click', () => {
+                document.querySelector('.header-inner').classList.toggle('open');
+            });
+        </script>
