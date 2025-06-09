@@ -32,6 +32,17 @@ class AnnouncementController
             exit;
         }
 
+        // Admin Delete functionality
+        if (isset($_GET['delete_comment_admin']) && is_numeric($_GET['delete_comment_admin'])) {
+            if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                $commentId = intval($_GET['delete_comment_admin']);
+                $this->commentModel->delete($commentId);
+                $_SESSION['flash_message'] = 'Comment successfully deleted';
+            }
+            header("Location: index.php?controller=announcement&action=show&id={$id}");
+            exit;
+        }
+
         // Delete
         if (isset($_GET['delete_comment']) && $_GET['delete_comment'] == '1') {
             if (isset($_SESSION['role'], $_SESSION['user_id']) && $_SESSION['role'] === 'subscriber') {
