@@ -18,7 +18,7 @@ global $subscriber;
 
     <header>
         <button class="header-toggle" aria-label="Toggle menu">
-            &#9776; <!-- icône hamburger -->
+            &#9776; <!-- hamburger icon -->
         </button>
 
         <div class="header-inner">

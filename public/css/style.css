@@ -211,7 +211,7 @@ footer {
 }
 
 /* ==============================================
-   Connexion
+   Connection
    ============================================== */
 .auth-container {
     max-width: 450px;
@@ -794,7 +794,7 @@ form button {
    Comments and notes
    ============================================== */
 /* ───────────────────────────────────────────────────────────────────────────────
-   Styles pour la section des commentaires / rating sur announcement_detail
+   Comments and ratings styles
    ───────────────────────────────────────────────────────────────────────────── */
 /* ==== Stars SVG ==== */
 .icon-star {
@@ -811,7 +811,7 @@ form button {
     stroke: #f1c40f;
 }
 
-/* ==== Lecture seule ==== */
+/* ==== Solo play ==== */
 .stars-readonly {
     display: flex;
     align-items: center;
@@ -824,7 +824,7 @@ form button {
     color: #2c3e50;
 }
 
-/* ==== Saisie interactive ==== */
+/* ==== interactive input ==== */
 .rating-input {
     margin: 1rem 0;
 }
@@ -832,7 +832,6 @@ form button {
 .star-widget {
     display: flex;
     flex-direction: row-reverse;
-    /* pour que la logique de data-value descende */
     gap: 4px;
 }
 
@@ -858,7 +857,7 @@ form button {
     stroke: #d35400;
 }
 
-/* ==== Modernisation des commentaires ==== */
+/* ==== Comments upgrade ==== */
 .comments-section {
     margin-top: 2rem;
 }

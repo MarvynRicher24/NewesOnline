@@ -83,7 +83,7 @@ class Comment
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //AVERAGE CALCUL
+    //Average calculation
     public function getAverageRating($annId)
     {
         $sql = "SELECT AVG(rating) AS avg_rating

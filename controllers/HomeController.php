@@ -33,7 +33,7 @@ class HomeController
         $announcements = $this->announcementModel->getPaginated($limit, $offset, $search, $categoryId);
 
         // Attach average rating to each announcement
-        foreach ($announcements as &$ann) {
+        foreach ($announcements as $ann) {
             $ann['average_rating'] = $this->commentModel
                 ->getAverageRating($ann['id']);
         }
