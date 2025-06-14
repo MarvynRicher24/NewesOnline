@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS comments (
 );
 
 -- Insert default categories
-INSERT INTO category (name) VALUES 
+INSERT INTO category (name) VALUES
     ('Vehicle'),
     ('Video game'),
     ('History'),
@@ -77,7 +77,7 @@ VALUES ('marvyn', 'marvyn');
 --  <?php
 --  // scripts/hash_admin.php
 --  require __DIR__ . '/../config/database.php'; // adjust path if needed
--- 
+--
 --  $username = 'marvyn';
 --  $plain    = 'marvyn';
 --  $hash     = password_hash($plain, PASSWORD_DEFAULT);
@@ -87,7 +87,7 @@ VALUES ('marvyn', 'marvyn');
 --      'user' => $username
 --  ]);
 --  echo "Password for '{$username}' has been hashed and updated.\n";
--- 
+--
 --  // Then run: php scripts/hash_admin.php
 
 
