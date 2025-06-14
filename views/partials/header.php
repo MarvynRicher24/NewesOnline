@@ -73,8 +73,8 @@ global $subscriber;
                     <a href="index.php?controller=auth&action=logout" class="button">Logout</a>
                 <?php else: ?>
                     <!-- Otherwise, show Login link -->
-                    <a href="index.php?controller=auth&action=connexion"
-                        class="button <?= (isset($_GET['action']) && $_GET['action'] === 'connexion') ? 'active' : '' ?>">
+                    <a href="index.php?controller=auth&action=connection"
+                        class="button <?= (isset($_GET['action']) && $_GET['action'] === 'connection') ? 'active' : '' ?>">
                         Login
                     </a>
                 <?php endif; ?>

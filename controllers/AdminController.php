@@ -13,7 +13,7 @@ class AdminController
     {
         // Ensure admin is logged in for all admin actions
         if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-            header('Location: index.php?controller=auth&action=connexion');
+            header('Location: index.php?controller=auth&action=connection');
             exit;
         }
 

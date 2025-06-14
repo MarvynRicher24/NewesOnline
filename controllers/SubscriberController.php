@@ -14,7 +14,7 @@ class SubscriberController
     public function profile()
     {
         if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'subscriber') {
-            header('Location: index.php?controller=auth&action=connexion');
+            header('Location: index.php?controller=auth&action=connection');
             exit;
         }
 
@@ -27,7 +27,7 @@ class SubscriberController
     public function edit()
     {
         if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'subscriber') {
-            header('Location: index.php?controller=auth&action=connexion');
+            header('Location: index.php?controller=auth&action=connection');
             exit;
         }
 
@@ -52,7 +52,7 @@ class SubscriberController
     public function update()
     {
         if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'subscriber') {
-            header('Location: index.php?controller=auth&action=connexion');
+            header('Location: index.php?controller=auth&action=connection');
             exit;
         }
 
@@ -70,7 +70,7 @@ class SubscriberController
         $subscriberModel = new Subscriber($this->pdo);
         $validator       = $subscriberModel->findById($_SESSION['user_id']);
         if (!$validator) {
-            header('Location: index.php?controller=auth&action=connexion');
+            header('Location: index.php?controller=auth&action=connection');
             exit;
         }
 

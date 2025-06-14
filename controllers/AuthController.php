@@ -13,8 +13,8 @@ class AuthController
         $this->pdo = $pdo;
     }
 
-    // Connexion
-    public function connexion()
+    // Connection
+    public function connection()
     {
         $error = '';
 
@@ -29,7 +29,7 @@ class AuthController
             }
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['connexion'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['connection'])) {
             $usernameOrEmail = $_POST['usernameOrEmail'];
             $password        = $_POST['password'];
 
@@ -58,7 +58,7 @@ class AuthController
 
             $error = "Incorrect login";
         }
-        require __DIR__ . '/../views/auth/connexion.php';
+        require __DIR__ . '/../views/auth/connection.php';
     }
 
     // Register
@@ -117,7 +117,7 @@ class AuthController
                     if ($ok) {
                         // Flash message
                         $_SESSION['flash_message'] = 'Registration successful, you can now log in';
-                        header('Location: index.php?controller=auth&action=connexion');
+                        header('Location: index.php?controller=auth&action=connection');
                         exit;
                     } else {
                         $register_error = "An error occurred during account creation";
@@ -125,7 +125,7 @@ class AuthController
                 }
             }
         }
-        require __DIR__ . '/../views/auth/connexion.php';
+        require __DIR__ . '/../views/auth/connection.php';
     }
 
     // Disconnection

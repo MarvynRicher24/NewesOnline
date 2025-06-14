@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Connexion/Register';
+$pageTitle = 'Connection/Register';
 include __DIR__ . '/../partials/header.php';
 ?>
 
@@ -20,7 +20,7 @@ include __DIR__ . '/../partials/header.php';
 
 <div class="auth-container">
     <div class="class auth-button">
-        <a href="index.php?controller=auth&action=connexion" class="button <?= (isset($_GET['action']) && $_GET['action'] === 'connexion') || !isset($_GET['action']) ? 'active' : '' ?>">Connexion</a>
+        <a href="index.php?controller=auth&action=connection" class="button <?= (isset($_GET['action']) && $_GET['action'] === 'connection') || !isset($_GET['action']) ? 'active' : '' ?>">Login</a>
         <a href="index.php?controller=auth&action=register" class="button <?= (isset($_GET['action']) && $_GET['action'] === 'register') ? 'active' : '' ?>">Register</a>
     </div>
 </div>
@@ -72,10 +72,10 @@ include __DIR__ . '/../partials/header.php';
 
 <?php else: ?>
 
-    <!-- Connexion -->
+    <!-- Connection -->
     <div class="form-container">
         <h2>Login</h2>
-        <form action="index.php?controller=auth&action=connexion" method="post">
+        <form action="index.php?controller=auth&action=connection" method="post">
 
             <!-- CSRF token -->
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
@@ -86,7 +86,7 @@ include __DIR__ . '/../partials/header.php';
             <label>Password :</label>
             <input type="password" name="password" required>
 
-            <button class="button" name="connexion" type="submit">Connexion</button>
+            <button class="button" name="connection" type="submit">Connection</button>
 
             <?php if (!empty($error)): ?>
                 <p class="error"><?= htmlspecialchars($error) ?></p>
