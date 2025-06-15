@@ -1,6 +1,8 @@
+-- 1) Create database if it doesn’t exist, then use it
 CREATE DATABASE IF NOT EXISTS dwwm CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE dwwm;
 
+-- 2) Table for admin users
 CREATE TABLE IF NOT EXISTS admin_users (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     username    VARCHAR(50) NOT NULL UNIQUE,
@@ -8,6 +10,7 @@ CREATE TABLE IF NOT EXISTS admin_users (
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 3) Table for subscribers
 CREATE TABLE IF NOT EXISTS subscriber (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     username    VARCHAR(50) NOT NULL UNIQUE,
@@ -18,12 +21,14 @@ CREATE TABLE IF NOT EXISTS subscriber (
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 4) Table for category
 CREATE TABLE IF NOT EXISTS category (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     name        VARCHAR(255) NOT NULL,
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 5) Table for announcements
 CREATE TABLE IF NOT EXISTS announcements (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     title        VARCHAR(255) NOT NULL,
@@ -37,6 +42,7 @@ CREATE TABLE IF NOT EXISTS announcements (
         ON DELETE SET NULL
 );
 
+-- 6) Table for commments / notes
 CREATE TABLE IF NOT EXISTS comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     subscriber_id INT NOT NULL,
@@ -54,6 +60,7 @@ CREATE TABLE IF NOT EXISTS comments (
         ON DELETE CASCADE
 );
 
+-- Insert default categories
 INSERT INTO category (name) VALUES
     ('Vehicle'),
     ('Video game'),
@@ -61,5 +68,26 @@ INSERT INTO category (name) VALUES
     ('Science'),
     ('Finance');
 
+-- Insert one admin user (password to be hashed in a PHP script)
+   You will run the separate PHP script to replace the plaintext password with a hash.
 INSERT INTO admin_users (username, password)
 VALUES ('marvyn', 'marvyn');
+
+-- Note: after importing this SQL, run the following PHP snippet to hash the admin password:
+ <?php
+ // scripts/hash_admin.php
+ require __DIR__ . '/../config/database.php'; // adjust path if needed
+--
+ $username = 'marvyn';
+ $plain    = 'marvyn';
+ $hash     = password_hash($plain, PASSWORD_DEFAULT);
+ $stmt     = $pdo->prepare("UPDATE admin_users SET password = :hash WHERE username = :user");
+ $stmt->execute([
+     'hash' => $hash,
+     'user' => $username
+ ]);
+ echo "Password for '{$username}' has been hashed and updated.\n";
+
+--
+
+ // Then run: php scripts/hash_admin.php
