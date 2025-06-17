@@ -41,7 +41,7 @@ include __DIR__ . '/../partials/header.php';
             <input type="email" name="email" required value="<?= isset($_POST['email']) ? htmlspecialchars($_POST["email"]) : '' ?>">
 
             <label>Password :</label>
-            <input type="password" name="password" required>
+            <input type="password" name="password" value="<?= isset($_POST['password']) ? htmlspecialchars($_POST["password"]) : '' ?>" required>
 
             <label>Choose your Avatar :</label>
             <div class="avatar-selection">
@@ -84,7 +84,7 @@ include __DIR__ . '/../partials/header.php';
             <input type="text" name="usernameOrEmail" required value="<?= isset($_POST['usernameOrEmail']) ? htmlspecialchars($_POST["usernameOrEmail"]) : '' ?>">
 
             <label>Password :</label>
-            <input type="password" name="password" required>
+            <input type="password" name="password" required value="<?= isset($_POST['password']) ? htmlspecialchars($_POST["password"]) : '' ?>">
 
             <button class="button" name="connection" type="submit">Connection</button>
 

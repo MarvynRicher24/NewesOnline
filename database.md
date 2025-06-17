@@ -74,14 +74,14 @@ CREATE SCHEMA dwwm;
 SET search_path TO dwwm;
 
 CREATE TABLE admin_users (
-    id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id          INTEGER        IDENTITY PRIMARY KEY,
     username    VARCHAR(50)    NOT NULL UNIQUE,
     password    VARCHAR(255)   NOT NULL,
     created_at  TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE subscriber (
-    id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id          INTEGER        IDENTITY PRIMARY KEY,
     username    VARCHAR(50)    NOT NULL UNIQUE,
     email       VARCHAR(255)   NOT NULL UNIQUE,
     password    VARCHAR(255)   NOT NULL,
@@ -91,13 +91,13 @@ CREATE TABLE subscriber (
 );
 
 CREATE TABLE category (
-    id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id          INTEGER        IDENTITY PRIMARY KEY,
     name        VARCHAR(255)   NOT NULL,
     created_at  TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE announcements (
-    id           INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id           INTEGER        IDENTITY PRIMARY KEY,
     title        VARCHAR(255)   NOT NULL,
     subtitle     VARCHAR(255),
     content      TEXT           NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE announcements (
 );
 
 CREATE TABLE comments (
-    id               INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id               INTEGER        IDENTITY PRIMARY KEY,
     subscriber_id    INTEGER        NOT NULL,
     announcement_id  INTEGER        NOT NULL,
     rating           SMALLINT       NOT NULL CHECK (rating BETWEEN 1 AND 5),
