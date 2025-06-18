@@ -49,6 +49,7 @@ class SubscriberController
         require __DIR__ . '/../views/subscriber/edit.php';
     }
 
+    // Update
     public function update()
     {
         if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'subscriber') {

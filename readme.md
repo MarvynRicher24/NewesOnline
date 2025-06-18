@@ -1,171 +1,219 @@
-# NewesOnline
+**NewesOnline**
 
-A modern, lightweight news platform built in plain PHP (MVC) with MySQL (or SQLite for testing), featuring an announcements system, user comments & ratings, and role‑based administration.
+> A modern, lightweight news platform built in plain PHP (MVC) with MySQL (or SQLite for testing), featuring announcements, comments & star ratings, and role‑based administration.
 
 ---
 
-## Table of Contents
+## 🚀 Table of Contents
 
 1. [Features](#features)
-2. [Requirements](#requirements)
-3. [Installation](#installation)
-4. [Configuration](#configuration)
-5. [Usage](#usage)
-6. [Project Structure](#project-structure)
-7. [Testing](#testing)
-8. [Contributing](#contributing)
-9. [License](#license)
+2. [Tech Stack](#tech-stack)
+3. [Requirements](#requirements)
+4. [Getting Started](#getting-started)
+5. [Configuration](#configuration)
+6. [Usage](#usage)
+7. [Project Structure](#project-structure)
+8. [Testing](#testing)
+9. [Roadmap](#roadmap)
+10. [Contributing](#contributing)
+11. [License](#license)
 
 ---
 
-## Features
+## ✨ Features
 
-- **Admin Panel**
-  - Create, edit, delete announcements
-  - Upload optional images
-  - Categorize content
+* **Admin Dashboard**
 
-- **Public Site**
-  - Browse latest announcements
-  - Filter by category or search terms
-  - View announcement details
+  * Create, edit, and delete announcements
+  * Upload and validate images (max 2 MB)
+  * Assign categories for better organization
 
-- **Subscribers**
-  - Register & log in
-  - Edit profile (avatar, description, password)
-  - Post a single comment + star rating (1–5) per announcement
-  - Edit or delete their own comment
+* **Public Interface**
 
-- **Comments & Ratings**
-  - Display average rating per announcement
-  - Subscribers can update or remove their own comment
-  - Admins can remove any comment
+  * Browse, search, and filter announcements by category or keyword
+  * Paginated listing for performance
+  * Detail pages with content, images, and metadata
 
-- **Security & UX**
-  - CSRF protection on all forms
-  - Passwords hashed with `password_hash()`
-  - Responsive, mobile‑friendly HTML/CSS
+* **Subscriber Experience**
+
+  * Secure registration and login
+  * Profile management (avatar, description, password)
+  * Post **one** comment + star rating (1–5) per announcement
+  * Edit or delete own comment anytime
+
+* **Comments & Ratings**
+
+  * Display average rating on listings and detail pages
+  * Subscribers can update or remove their feedback
+  * Admins can moderate (delete) any comment
+
+* **Security & Best Practices**
+
+  * PDO prepared statements → SQL Injection prevention
+  * CSRF tokens on all forms → request forgery protection
+  * `htmlspecialchars()` everywhere → XSS defense
+  * Passwords hashed with `password_hash()` and verified with `password_verify()`
+  * UTF‑8 encoding (`utf8mb4`) for full multilingual support
+
+* **Responsive Design**
+
+  * Mobile‑friendly layout with CSS grids
+  * SVG icons and accessible markup
 
 ---
 
-## Requirements
+## 🛠️ Tech Stack
 
-- PHP ≥ 7.4 (tested on 8.0+) with PDO extension
-- MySQL 5.7+ (or MariaDB)
-- Composer (for PHPUnit & autoloading)
-- Web server (Apache, Nginx…) or PHP’s built‑in server
+* **Language:** PHP ≥ 7.4 (tested on 8.0+)
+* **Database:** MySQL 5.7+ (MariaDB) or SQLite (testing)
+* **Frontend:** HTML5, CSS3 (responsive, no framework)
+* **Testing:** PHPUnit, in‑memory SQLite
+* **Deployment:** Apache/Nginx or PHP built‑in server
 
 ---
 
-## Installation
+## ⚙️ Requirements
 
-1. **Clone the repository**
+* PHP with PDO extension
+* MySQL / MariaDB (or SQLite for local tests)
+* [Composer](https://getcomposer.org/)
+* Web server (Apache, Nginx) or PHP’s built‑in server
+
+---
+
+## 🏁 Getting Started
+
+Follow these steps to get your development environment up and running:
+
+1. **Clone the repo**
+
    ```bash
-   git clone https://github.com/your‑vendor/newesonline.git
+   git clone https://github.com/your-vendor/newesonline.git
    cd newesonline
-
+   ```
 2. **Install dependencies**
+
+   ```bash
    composer install
+   ```
+3. **Initialize the database**
 
-3. **Import database schema**
-    mysql -u root -p < database.sql
-    **note : The default SQL includes a plaintext admin user (marvyn). After import, hash its password by running :**
-    php scripts/hash_admin.php
+   ```bash
+   mysql -u root -p < database.sql
+   ```
 
-4. **Adjust file permissions**
-    chmod -R 775 public/uploads
+   > **Note:** The seed SQL creates a default admin (`marvyn`/`marvyn`). Immediately hash its password:
+
+   ```bash
+   php scripts/hash_admin.php
+   ```
+4. **Set permissions**
+
+   ```bash
+   chmod -R 775 public/uploads
+   ```
+5. **Start the server**
+
+   ```bash
+   php -S localhost:8000 -t public
+   ```
+6. **Visit in your browser**
+   Open [http://localhost:8000](http://localhost:8000)
 
 ---
 
-## Configuration
+## 🔧 Configuration
 
 1. **Database credentials**
-    Edit config/config.php (or config/database.php) to set your DB host, name, user, and password :
+   Edit `config/config.php`:
 
-    return [
-    'db_host' => 'localhost',
-    'db_name' => 'dwwm',
-    'db_user' => 'root',
-    'db_pass' => 'secret',
-    ];
-
+   ```php
+   return [
+       'db_host' => 'localhost',
+       'db_name' => 'dwwm',
+       'db_user' => 'root',
+       'db_pass' => 'secret',
+   ];
+   ```
 2. **Virtual host (optional)**
-    Configure Apache/Nginx to serve the project root, with public/ as the document root.
-
-3. **Session & CSRF**
-    PHP sessions & CSRF tokens require a writable session directory (default OS tmp is fine).
-
----
-
-## Usage
-
-**Database credentials**
-Browse and filter announcements: http://your‑domain/index.php
-
-**Admin**
-Log in as admin (default marvyn / marvyn before hashing)
-➔ http://your‑domain/index.php?controller=auth&action=connection ➔ Admin Panel
-
-**Subscriber**
-Register a new account ➔ log in ➔ comment, rate, edit profile
+   Point your server’s document root to `public/`.
+3. **Sessions & CSRF**
+   Ensure PHP can write to its session directory (default OS temp is fine).
 
 ---
 
-## Project Structure
+## 💻 Usage
 
+* **Public**
+  Browse and filter announcements on the home page.
+* **Admin**
+
+  1. Log in: `marvyn` / `marvyn` (then hashed)
+  2. Access Admin Panel: `/index.php?controller=admin&action=index`
+* **Subscriber**
+
+  1. Register or log in
+  2. Comment, rate, and manage your profile
+
+---
+
+## 📁 Project Structure
+
+```
 NewesOnline/
-├── config/
-│   ├── config.php          # DB credentials
-│   └── database.php        # PDO setup
-├── controllers/            # MVC controller classes
-├── models/                 # Data-access models (PDO)
-├── public/                 # Public assets & uploads
-│   ├── css/
-│   ├── uploads/
-│   └── index.php           # Front controller
-├── scripts/                # Utility scripts (e.g. hash_admin.php)
-├── tests/                  # PHPUnit tests (in-memory SQLite)
-├── views/                  # Twig‑style PHP views
-│   ├── admin/
-│   ├── auth/
-│   ├── public/
-│   └── subscriber/
-├── database.sql            # MySQL schema + seeds
-├── composer.json
-├── phpunit.xml
-└── README.md
+├─ config/              # Database settings & connection
+│  ├─ config.php
+│  └─ database.php
+├─ controllers/         # MVC controllers
+├─ models/              # Data-access via PDO
+├─ public/              # Public assets & front controller
+│  ├─ css/
+│  ├─ uploads/
+│  └─ index.php
+├─ scripts/             # Utility scripts (e.g. hash_admin.php)
+├─ tests/               # PHPUnit tests (SQLite)
+├─ views/               # PHP templates (admin, auth, public, subscriber)
+├─ database.sql         # Schema + seed data
+├─ composer.json        # Dependencies & autoloading
+├─ phpunit.xml          # PHPUnit configuration
+└─ README.md            # You are here
+```
 
 ---
 
-## Testing
-We use PHPUnit with an in‑memory SQLite database for fast, isolated model tests.
+## 🧪 Testing
+
+Unit and integration tests are powered by PHPUnit using an in‑memory SQLite database:
 
 1. **Install dev dependencies**
-composer install --dev
 
-2. **Run test suite**
-Run -> "./vendor/bin/phpunit"
+   ```bash
+   composer install --dev
+   ```
+2. **Run tests**
 
-All tests are located in tests/ and follow PSR‑4 autoloading via Composer’s autoload-dev.
+   ```bash
+   ./vendor/bin/phpunit
+   ```
+
+All tests live under `tests/` and adhere to PSR‑4 autoloading via Composer.
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
-1. Fork the repository
+I love contributions! Please:
 
-2. Create a feature branch: git checkout -b feature/foo
-
-3. Commit your changes: git commit -am 'Add feature foo'
-
-4. Push to your branch: git push origin feature/foo
-
+1. Fork the repo
+2. Create a branch: `git checkout -b feature/YourFeature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push: `git push origin feature/YourFeature`
 5. Open a Pull Request
 
-Be sure to include tests for any new functionality.
+Please include tests for new functionality and follow existing coding standards.
 
 ---
 
-## License
+## 📄 License
 
-Marvyn Richer License.
+This project is released under the **Marvyn Richer License**.
