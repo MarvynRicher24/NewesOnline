@@ -1,6 +1,6 @@
 **NewesOnline**
 
-> A modern, lightweight news platform built in plain PHP (MVC) with MySQL (or SQLite for testing), featuring announcements, comments & star ratings, and role‑based administration.
+> A modern announcement publishing platform built in PHP (MVC) with MySQL, featuring announcements, comments & star ratings, and role‑based administration.
 
 ---
 
